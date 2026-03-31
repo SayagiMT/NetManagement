@@ -2,21 +2,21 @@ package com.NetProject.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 // Thực thể: GIAODICHNAPTIEN
 @Entity
 public class DepositTransaction {
     private String transactionId;
     private Float amount;
-    private Date depositTime;
+    private LocalDateTime depositTime;
     private Account account;
     private Employee employee;
 
     public DepositTransaction() {
     }
 
-    public DepositTransaction(String transactionId, Float amount, Date depositTime, Account account, Employee employee) {
+    public DepositTransaction(String transactionId, Float amount, LocalDateTime depositTime, Account account, Employee employee) {
         this.transactionId = transactionId;
         this.amount = amount;
         this.depositTime = depositTime;
@@ -45,11 +45,11 @@ public class DepositTransaction {
 
     // Thời gian nạp: Date (Thuộc tính mô tả)
     @Temporal(TemporalType.TIMESTAMP)
-    public Date getDepositTime() {
+    public LocalDateTime getDepositTime() {
         return depositTime;
     }
 
-    public void setDepositTime(Date depositTime) {
+    public void setDepositTime(LocalDateTime depositTime) {
         this.depositTime = depositTime;
     }
 
