@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/netproject?useSSL=false&amp;serverTimezone=UTC</property>
+
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">123456</property>
+        
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <mapping class="com.NetProject.entity.Account"/>
+        <mapping class="com.NetProject.entity.Customer"/>
+        <mapping class="com.NetProject.entity.Employee"/>
+        <mapping class="com.NetProject.entity.Zone"/>
+        <mapping class="com.NetProject.entity.Computer"/>
+        <mapping class="com.NetProject.entity.SessionLog"/>
+        <mapping class="com.NetProject.entity.DepositTransaction"/>
+        <mapping class="com.NetProject.entity.ServiceItem"/>
+        <mapping class="com.NetProject.entity.Invoice"/>
+        <mapping class="com.NetProject.entity.InvoiceDetail"/>
+
+    </session-factory>
+</hibernate-configuration>
