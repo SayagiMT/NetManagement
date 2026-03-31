@@ -30,4 +30,12 @@ public class InvoiceDAO extends GenericDAO<Invoice, String> {
             }
         });
     }
+    // Lấy danh sách các hóa đơn chưa thanh toán của một máy cụ thể
+    public List<Invoice> getUnpaidInvoicesByComputer(String computerId) {
+        return executeQuery(session ->
+                session.createQuery("FROM Invoice i WHERE i.computer.computerId = :compId AND i.status = 'Chưa thanh toán'", Invoice.class)
+                        .setParameter("compId", computerId)
+                        .list()
+        );
+    }
 }

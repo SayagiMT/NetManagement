@@ -1,0 +1,176 @@
+package com.NetProject.controller;
+
+import com.NetProject.dto.AccountDTO;
+import com.NetProject.dto.CartItemDTO;
+import com.NetProject.dto.MenuItemDTO;
+import com.NetProject.service.OrderService;
+import com.NetProject.view.frmOrder;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+public class OrderController {
+    private frmOrder view;
+    private OrderService service;
+    private AccountDTO loggedInUser;
+
+    // BIẾN MỚI: Khai báo thêm mã máy tính
+    private String computerId;
+
+    private List<MenuItemDTO> menuList;
+    private List<CartItemDTO> cartList;
+
+    // CONSTRUCTOR MỚI: Nhận đủ 3 tham số (view, user, computerId)
+    public OrderController(frmOrder view, AccountDTO user, String computerId) {
+        this.view = view;
+        this.loggedInUser = user;
+        this.computerId = computerId; // Nhận và lưu mã máy từ MainController truyền sang
+        this.service = new OrderService();
+        this.cartList = new ArrayList<>();
+
+        loadMenu();
+        initEvents();
+    }
+
+    private void loadMenu() {
+        menuList = service.getAllMenuItems();
+        DefaultTableModel model = view.getMenuModel();
+        model.setRowCount(0); // Xóa dữ liệu cũ
+
+        for (MenuItemDTO item : menuList) {
+            model.addRow(new Object[]{
+                    item.getServiceId(),
+                    item.getServiceName(),
+                    item.getPrice(),
+                    item.getStockQuantity()
+            });
+        }
+    }
+
+    private void initEvents() {
+
+        // Sự kiện: Nút THÊM VÀO GIỎ HÀNG
+        view.getBtnAddToCart().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = view.getTblMenu().getSelectedRow();
+                if (selectedRow == -1) {
+                    view.showMessage("Vui lòng chọn một món từ Thực Đơn!", true);
+                    return;
+                }
+
+                MenuItemDTO selectedItem = menuList.get(selectedRow);
+
+                if (selectedItem.getStockQuantity() <= 0) {
+                    view.showMessage("Món này đã hết hàng!", true);
+                    return;
+                }
+
+                String input = JOptionPane.showInputDialog(view, "Nhập số lượng cho món [" + selectedItem.getServiceName() + "]:", "1");
+                if (input == null || input.trim().isEmpty()) return; // Hủy bỏ
+
+                try {
+                    int quantity = Integer.parseInt(input);
+                    if (quantity <= 0 || quantity > selectedItem.getStockQuantity()) {
+                        view.showMessage("Số lượng không hợp lệ hoặc vượt quá tồn kho!", true);
+                        return;
+                    }
+
+                    addToCart(selectedItem, quantity);
+
+                } catch (NumberFormatException ex) {
+                    view.showMessage("Vui lòng nhập số nguyên hợp lệ!", true);
+                }
+            }
+        });
+
+        // Sự kiện: Nút XÓA MÓN CHỌN
+        view.getBtnRemoveItem().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = view.getTblCart().getSelectedRow();
+                if (selectedRow == -1) {
+                    view.showMessage("Vui lòng chọn món cần xóa trong Giỏ Hàng!", true);
+                    return;
+                }
+
+                cartList.remove(selectedRow);
+                updateCartView();
+            }
+        });
+
+        // Sự kiện: Nút THANH TOÁN / CHỐT ĐƠN
+        view.getBtnCheckout().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (cartList.isEmpty()) {
+                    view.showMessage("Giỏ hàng đang trống!", true);
+                    return;
+                }
+
+                float total = 0;
+                for (CartItemDTO c : cartList) total += c.getTotalAmount();
+
+                int confirm = JOptionPane.showConfirmDialog(view,
+                        String.format("Xác nhận chốt đơn hàng: %,.0f VNĐ?", total),
+                        "Xác Nhận", JOptionPane.YES_NO_OPTION);
+
+                if (confirm == JOptionPane.YES_OPTION) {
+
+                    // GỌI SERVICE MỚI: Truyền thêm biến computerId vào để ghi nợ
+                    boolean success = service.checkout(cartList, total, loggedInUser.getAccountId(), computerId);
+
+                    if (success) {
+                        view.showMessage("Chốt đơn thành công!", false);
+                        cartList.clear();     // Xóa sạch giỏ hàng
+                        updateCartView();     // Cập nhật lại giao diện giỏ
+                        loadMenu();           // Load lại Menu để cập nhật số lượng tồn kho
+                    } else {
+                        view.showMessage("Lỗi hệ thống khi thanh toán!", true);
+                    }
+                }
+            }
+        });
+    }
+
+    private void addToCart(MenuItemDTO item, int quantity) {
+        boolean exists = false;
+        for (CartItemDTO cartItem : cartList) {
+            if (cartItem.getServiceId().equals(item.getServiceId())) {
+                cartItem.setQuantity(cartItem.getQuantity() + quantity);
+                exists = true;
+                break;
+            }
+        }
+
+        if (!exists) {
+            cartList.add(new CartItemDTO(item.getServiceId(), item.getServiceName(), quantity, item.getPrice()));
+        }
+
+        updateCartView();
+    }
+
+    private void updateCartView() {
+        DefaultTableModel model = view.getCartModel();
+        model.setRowCount(0);
+
+        float total = 0;
+
+        for (CartItemDTO cartItem : cartList) {
+            model.addRow(new Object[]{
+                    cartItem.getServiceName(),
+                    cartItem.getQuantity(),
+                    cartItem.getPrice(),
+                    cartItem.getTotalAmount(),
+                    cartItem.getServiceId()
+            });
+            total += cartItem.getTotalAmount();
+        }
+
+        view.setTotalAmountText(String.format("Tổng Tiền: %,.0f VNĐ", total));
+    }
+}
