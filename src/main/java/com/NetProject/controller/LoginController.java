@@ -33,17 +33,20 @@ public class LoginController {
         AccountDTO account = service.login(user, pass);
 
         if (account != null) {
+
+            // Kiểm tra phân quyền: Chặn Member đăng nhập vào phần mềm của Thu ngân
+            if (account.getRole().equalsIgnoreCase("Member")) {
+                view.showMessage("Truy cập bị từ chối!\nTài khoản Hội viên không được phép dùng phần mềm Quản lý.");
+                return; // Dừng lại ngay lập tức
+            }
+
             view.showMessage("Đăng nhập thành công! Chào " + account.getRole());
+            view.dispose(); // Đóng form login
 
-            // 1. Đóng form Login hiện tại đi
-            view.dispose();
-
-            // 2. MỞ FORM TIẾP THEO LÊN (Ví dụ: mở form Sơ đồ máy - frmMain)
-            // (Nếu bạn muốn test form Order thì đổi frmMain thành frmOrder nhé)
+            // Mở giao diện Main
             com.NetProject.view.frmMain mainForm = new com.NetProject.view.frmMain();
             new com.NetProject.controller.MainController(mainForm, account);
             mainForm.setVisible(true);
-
         } else {
             view.showMessage("Sai tài khoản hoặc mật khẩu!");
         }

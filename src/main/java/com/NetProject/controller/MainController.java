@@ -2,6 +2,7 @@ package com.NetProject.controller;
 
 import com.NetProject.dto.AccountDTO;
 import com.NetProject.dto.ComputerDTO;
+import com.NetProject.service.AccountService;
 import com.NetProject.service.ComputerService;
 import com.NetProject.view.frmMain;
 
@@ -20,7 +21,10 @@ public class MainController {
         this.loggedInUser = user;
         this.computerService = new ComputerService();
 
+        // Hiển thị lời chào
         mainView.setWelcomeText("Xin chào [" + user.getRole() + "] : " + user.getUsername());
+
+        // Vẽ sơ đồ phòng máy
         loadComputerMap();
     }
 
@@ -41,24 +45,69 @@ public class MainController {
                 }
 
                 if (clickedPc != null) {
+                    // ==========================================
+                    // TRƯỜNG HỢP 1: MÁY TRỐNG (MÀU XANH) -> MỞ MÁY
+                    // ==========================================
                     if (clickedPc.getStatus().equalsIgnoreCase("Available")) {
 
-                        int confirm = JOptionPane.showConfirmDialog(
+                        String[] openOptions = {"🚶 Khách Vãng Lai (Mở ngay)", "👑 Khách Hội Viên (Đăng nhập)", "Hủy"};
+                        int openChoice = JOptionPane.showOptionDialog(
                                 null,
-                                "Bạn có muốn mở máy " + clickedPc.getComputerName() + " không?",
-                                "Xác nhận mở máy",
-                                JOptionPane.YES_NO_OPTION
+                                "Chọn hình thức mở máy [" + clickedPc.getComputerName() + "]:",
+                                "Khởi động máy trạm",
+                                JOptionPane.DEFAULT_OPTION,
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                openOptions,
+                                openOptions[0]
                         );
 
-                        if (confirm == JOptionPane.YES_OPTION) {
+                        if (openChoice == 0) {
+                            // 1. Khách vãng lai: Thu ngân mở máy
                             boolean success = computerService.openComputer(computerId, loggedInUser.getAccountId());
                             if (success) {
                                 loadComputerMap();
                             } else {
                                 JOptionPane.showMessageDialog(null, "Lỗi khi mở máy!", "Thất bại", JOptionPane.ERROR_MESSAGE);
                             }
+
+                        } else if (openChoice == 1) {
+                            // 2. Khách hội viên: Giả lập đăng nhập máy trạm
+                            JTextField txtUser = new JTextField();
+                            JPasswordField txtPass = new JPasswordField();
+                            Object[] loginForm = {
+                                    "Tài khoản Hội viên:", txtUser,
+                                    "Mật khẩu:", txtPass
+                            };
+
+                            int loginResult = JOptionPane.showConfirmDialog(null, loginForm,
+                                    "MÁY TRẠM: " + clickedPc.getComputerName() + " - Khách Đăng Nhập",
+                                    JOptionPane.OK_CANCEL_OPTION);
+
+                            if (loginResult == JOptionPane.OK_OPTION) {
+                                String mUser = txtUser.getText();
+                                String mPass = new String(txtPass.getPassword());
+
+                                AccountService accService = new AccountService();
+                                AccountDTO memberAcc = accService.login(mUser, mPass);
+
+                                if (memberAcc != null && memberAcc.getRole().equalsIgnoreCase("Member")) {
+                                    boolean success = computerService.openComputer(computerId, memberAcc.getAccountId());
+                                    if (success) {
+                                        JOptionPane.showMessageDialog(null, "Hội viên [" + memberAcc.getUsername() + "] đã đăng nhập thành công vào máy!");
+                                        loadComputerMap();
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "Lỗi hệ thống khi khởi tạo phiên chơi!", "Thất bại", JOptionPane.ERROR_MESSAGE);
+                                    }
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Đăng nhập máy trạm thất bại!\nSai tài khoản hoặc bạn không phải là Hội viên.", "Từ chối", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }
                         }
 
+                        // ==========================================
+                        // TRƯỜNG HỢP 2: MÁY ĐANG SỬ DỤNG (MÀU ĐỎ) -> MENU DỊCH VỤ
+                        // ==========================================
                     } else if (clickedPc.getStatus().equalsIgnoreCase("In Use")) {
 
                         String[] options = {"🍔 Gọi Dịch Vụ (F&B)", "💰 Tính Tiền & Đóng Máy", "Hủy Bỏ"};
@@ -74,13 +123,13 @@ public class MainController {
                         );
 
                         if (choice == 0) {
-                            // Khách gọi dịch vụ tại máy
+                            // CHỌN 1: KHÁCH GỌI ĐỒ ĂN (GHI NỢ)
                             com.NetProject.view.frmOrder orderView = new com.NetProject.view.frmOrder();
                             new com.NetProject.controller.OrderController(orderView, loggedInUser, computerId);
                             orderView.setVisible(true);
 
                         } else if (choice == 1) {
-
+                            // CHỌN 2: TÍNH TIỀN (GỘP BILL) VÀ ĐÓNG MÁY
                             int confirm = JOptionPane.showConfirmDialog(
                                     null,
                                     "Xác nhận TÍNH TIỀN và ĐÓNG MÁY [" + clickedPc.getComputerName() + "]?",
@@ -91,7 +140,6 @@ public class MainController {
                             if (confirm == JOptionPane.YES_OPTION) {
                                 String resultMessage = computerService.closeComputer(computerId);
 
-                                // FIX LỖI 2: Đổi "Thanh toán" thành "HÓA ĐƠN" để khớp với ComputerService
                                 if (resultMessage.startsWith("HÓA ĐƠN")) {
                                     JOptionPane.showMessageDialog(null, resultMessage, "Hóa đơn thanh toán", JOptionPane.INFORMATION_MESSAGE);
                                     loadComputerMap();
