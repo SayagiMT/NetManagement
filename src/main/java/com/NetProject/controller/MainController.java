@@ -4,6 +4,7 @@ import com.NetProject.dto.AccountDTO;
 import com.NetProject.dto.ComputerDTO;
 import com.NetProject.service.AccountService;
 import com.NetProject.service.ComputerService;
+import com.NetProject.view.frmCustomer;
 import com.NetProject.view.frmMain;
 
 import javax.swing.*;
@@ -26,6 +27,21 @@ public class MainController {
 
         // Vẽ sơ đồ phòng máy
         loadComputerMap();
+
+        // ==========================================
+        // SỰ KIỆN: MỞ FORM QUẢN LÝ HỘI VIÊN
+        // ==========================================
+        this.mainView.getBtnManageMembers().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frmCustomer memberView = new frmCustomer();
+
+                // TRUYỀN loggedInUser SANG CHO MemberController
+                new CustomerController(memberView, loggedInUser);
+
+                memberView.setVisible(true);
+            }
+        });
     }
 
     private void loadComputerMap() {
@@ -138,7 +154,34 @@ public class MainController {
                             );
 
                             if (confirm == JOptionPane.YES_OPTION) {
-                                String resultMessage = computerService.closeComputer(computerId);
+
+                                // --- BẮT ĐẦU: TRUY XUẤT TÊN THẬT NHÂN VIÊN ---
+                                String realName = loggedInUser.getUsername(); // Mặc định là Username
+
+                                try {
+                                    com.NetProject.dao.EmployeeDAO empDAO = new com.NetProject.dao.EmployeeDAO();
+
+                                    // Lấy danh sách toàn bộ nhân viên
+                                    java.util.List<com.NetProject.entity.Employee> allEmps = empDAO.findAll();
+
+                                    if (allEmps != null) {
+                                        for (com.NetProject.entity.Employee emp : allEmps) {
+                                            // Dò xem nhân viên nào đang liên kết với Account đang đăng nhập
+                                            if (emp.getAccount() != null && emp.getAccount().getAccountId().equals(loggedInUser.getAccountId())) {
+                                                realName = emp.getEmployeeName(); // Lôi tên thật ra!
+                                                break; // Tìm thấy rồi thì thoát vòng lặp cho nhẹ máy
+                                            }
+                                        }
+                                    }
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                }
+
+                                // Ghép Tên thật và Chức vụ
+                                String cashierName = realName + " (" + loggedInUser.getRole() + ")";
+
+                                String resultMessage = computerService.closeComputer(computerId, cashierName);
+                                // --- KẾT THÚC ---
 
                                 if (resultMessage.startsWith("HÓA ĐƠN")) {
                                     JOptionPane.showMessageDialog(null, resultMessage, "Hóa đơn thanh toán", JOptionPane.INFORMATION_MESSAGE);

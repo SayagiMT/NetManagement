@@ -1,71 +1,26 @@
 package com.NetProject.dto;
 
-
-
-import java.time.LocalDateTime;
-
+import java.util.Date;
 
 public class DepositTransactionDTO {
     private String transactionId;
     private Float amount;
-    private LocalDateTime depositTime;
-    private String accountId;
-    private String employeeId;
+    private Date depositDate;
+    private String accountId;   // Chỉ lưu ID thay vì nguyên cục Account Entity
+    private String username;    // Lưu thêm tên để dễ hiển thị lên bảng
 
-    public DepositTransactionDTO() {
-    }
-
-    public DepositTransactionDTO(String transactionId, Float amount, LocalDateTime depositTime, String accountId, String employeeId) {
+    public DepositTransactionDTO(String transactionId, Float amount, Date depositDate, String accountId, String username) {
         this.transactionId = transactionId;
         this.amount = amount;
-        this.depositTime = depositTime;
+        this.depositDate = depositDate;
         this.accountId = accountId;
-        this.employeeId = employeeId;
+        this.username = username;
     }
 
-
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
-
-
-    public Float getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Float amount) {
-        this.amount = amount;
-    }
-
-
-    public LocalDateTime getDepositTime() {
-        return depositTime;
-    }
-
-    public void setDepositTime(LocalDateTime depositTime) {
-        this.depositTime = depositTime;
-    }
-
-
-    public String getAccount() {
-        return accountId;
-    }
-
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
-    }
-
-
-
-    public String getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
-    }
+    // Các hàm Getters
+    public String getTransactionId() { return transactionId; }
+    public Float getAmount() { return amount; }
+    public Date getDepositDate() { return depositDate; }
+    public String getAccountId() { return accountId; }
+    public String getUsername() { return username; }
 }

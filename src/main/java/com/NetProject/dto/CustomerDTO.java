@@ -1,58 +1,20 @@
-package com.NetProject.entity;
-
-
-
+package com.NetProject.dto;
 
 public class CustomerDTO {
-    private String customerId;
-    private String customerName;
-    private String phoneNumber;
-    private String accountId;     // mã tài khoản
+    private String accountId;
+    private String username;
+    private String password;
+    private Float balance;
 
-    public CustomerDTO() {
-    }
-
-    public CustomerDTO(String customerId, String customerName, String phoneNumber, String accountId) {
-        this.customerId = customerId;
-        this.customerName = customerName;
-        this.phoneNumber = phoneNumber;
+    public CustomerDTO(String accountId, String username, String password, Float balance) {
         this.accountId = accountId;
+        this.username = username;
+        this.password = password;
+        this.balance = balance;
     }
 
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
-    }
+    public String getAccountId() { return accountId; }
+    public String getUsername() { return username; }
+    public String getPassword() { return password; }
+    public Float getBalance() { return balance; }
 }

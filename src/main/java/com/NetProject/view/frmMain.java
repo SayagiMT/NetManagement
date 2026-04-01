@@ -10,6 +10,7 @@ import java.util.List;
 public class frmMain extends JFrame {
     private JLabel lblWelcome;
     private JPanel pnlComputerMap;
+    private JButton btnManageMembers;
 
 
     public frmMain() {
@@ -28,6 +29,19 @@ public class frmMain extends JFrame {
         lblWelcome.setFont(new Font("Arial", Font.BOLD, 16));
         lblWelcome.setForeground(Color.WHITE);
         pnlHeader.add(lblWelcome);
+
+        // --- NÚT QUẢN LÝ HỘI VIÊN ---
+        pnlHeader.add(Box.createHorizontalStrut(50)); // Tạo khoảng cách
+
+        btnManageMembers = new JButton("👥 QUẢN LÝ HỘI VIÊN");
+        btnManageMembers.setBackground(new Color(52, 152, 219)); // Màu xanh dương đậm chất quản lý
+        btnManageMembers.setForeground(Color.WHITE);
+        btnManageMembers.setFont(new Font("Arial", Font.BOLD, 14));
+        btnManageMembers.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        pnlHeader.add(btnManageMembers);
+        // ----------------------------
+
         add(pnlHeader, BorderLayout.NORTH);
 
         // 2. Center: Khu vực lưới sơ đồ máy tính
@@ -91,6 +105,10 @@ public class frmMain extends JFrame {
         // Cập nhật lại giao diện ngay lập tức
         pnlComputerMap.revalidate();
         pnlComputerMap.repaint();
+    }
+
+    public JButton getBtnManageMembers() {
+        return btnManageMembers;
     }
 
 }

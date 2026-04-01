@@ -2,8 +2,8 @@ package com.NetProject.dao;
 
 import com.NetProject.entity.Customer;
 
-public class CustomerDAO extends GenericDAO<Customer, String> {
-    public CustomerDAO() {
+public class MemberDAO extends GenericDAO<Customer, String> {
+    public MemberDAO() {
         super(Customer.class);
     }
 }

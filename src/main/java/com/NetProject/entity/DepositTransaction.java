@@ -44,7 +44,7 @@ public class DepositTransaction {
     }
 
     // Thời gian nạp: Date (Thuộc tính mô tả)
-    @Temporal(TemporalType.TIMESTAMP)
+
     public LocalDateTime getDepositTime() {
         return depositTime;
     }

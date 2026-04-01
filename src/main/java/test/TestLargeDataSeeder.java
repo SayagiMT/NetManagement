@@ -3,9 +3,6 @@ package test;
 import com.NetProject.dao.*;
 import com.NetProject.entity.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Random;
 
 public class TestLargeDataSeeder {
@@ -16,7 +13,7 @@ public class TestLargeDataSeeder {
         ZoneDAO zoneDAO = new ZoneDAO();
         ComputerDAO computerDAO = new ComputerDAO();
         AccountDAO accountDAO = new AccountDAO();
-        CustomerDAO customerDAO = new CustomerDAO();
+        MemberDAO customerDAO = new MemberDAO();
         EmployeeDAO employeeDAO = new EmployeeDAO();
         ServiceItemDAO serviceItemDAO = new ServiceItemDAO();
 
