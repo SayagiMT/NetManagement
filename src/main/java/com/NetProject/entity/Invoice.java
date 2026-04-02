@@ -2,13 +2,13 @@ package com.NetProject.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 // Thực thể: HOADON
 @Entity
 public class Invoice {
     private String invoiceId;
-    private Date createdAt;
+    private LocalDateTime createdAt;
     private Float totalAmount;
     private String status;
     private Account account;
@@ -17,7 +17,7 @@ public class Invoice {
     public Invoice() {
     }
 
-    public Invoice(String invoiceId, Date createdAt, Float totalAmount, String status, Account account, Computer computer) {
+    public Invoice(String invoiceId, LocalDateTime createdAt, Float totalAmount, String status, Account account, Computer computer) {
         this.invoiceId = invoiceId;
         this.createdAt = createdAt;
         this.totalAmount = totalAmount;
@@ -36,13 +36,13 @@ public class Invoice {
         this.invoiceId = invoiceId;
     }
 
-    // Thời gian lập: Date (Thuộc tính mô tả)
+    // Thời gian lập: LocalDateTime (Thuộc tính mô tả)
     @Temporal(TemporalType.TIMESTAMP)
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 

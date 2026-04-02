@@ -10,7 +10,7 @@ import com.NetProject.dto.MenuItemDTO;
 import com.NetProject.entity.*;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class OrderService {
@@ -62,7 +62,7 @@ public class OrderService {
             String invoiceId = "INV_" + System.currentTimeMillis();
             invoice.setInvoiceId(invoiceId);
 
-            invoice.setCreatedAt(new Date());
+            invoice.setCreatedAt(LocalDateTime.now());
             invoice.setTotalAmount(totalAmount);
             invoice.setAccount(acc);
 

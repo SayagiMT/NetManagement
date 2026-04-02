@@ -11,7 +11,7 @@ import com.NetProject.entity.Invoice;
 import com.NetProject.entity.SessionLog;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ComputerService {
@@ -66,7 +66,7 @@ public class ComputerService {
 
             SessionLog log = new SessionLog();
             log.setSessionId("SES_" + System.currentTimeMillis());
-            log.setStartTime(new Date());
+            log.setStartTime(LocalDateTime.now());
             log.setComputer(pc);
             log.setAccount(acc);
             log.setDeductedAmount(0f);
@@ -95,12 +95,17 @@ public class ComputerService {
             // ==========================================
             // PHẦN 1: TÍNH TIỀN GIỜ CHƠI
             // ==========================================
-            Date now = new Date();
+            LocalDateTime now = LocalDateTime.now();
             log.setEndTime(now);
 
-            long diffInMillies = now.getTime() - log.getStartTime().getTime();
-            if (diffInMillies < 60000) diffInMillies = 60000;
-            float hoursPlayed = (float) diffInMillies / (1000 * 60 * 60);
+            // Dùng java.time.Duration để lấy khoảng cách giữa 2 mốc thời gian (tính bằng Phút)
+            long minutesPlayed = java.time.Duration.between(log.getStartTime(), now).toMinutes();
+
+            // Nếu khách vừa ngồi vào chưa được 1 phút (ví dụ lỡ tay bật) -> tính tối thiểu 1 phút
+            if (minutesPlayed < 1) minutesPlayed = 1;
+
+            // Đổi số phút ra số Giờ (chia 60.0f để ra số thập phân)
+            float hoursPlayed = (float) minutesPlayed / 60.0f;
 
             float pricePerHour = pc.getZone().getHourlyRate();
             float totalFee = hoursPlayed * pricePerHour;

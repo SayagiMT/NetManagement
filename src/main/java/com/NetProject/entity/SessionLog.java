@@ -2,14 +2,14 @@ package com.NetProject.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 // Xây dựng lớp đối tượng nhật ký sử dụng (Thực thể: NHATKYSUDUNG)
 @Entity
 public class SessionLog {
     private String sessionId;
-    private Date startTime;
-    private Date endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private Float deductedAmount;
     private Computer computer;
     private Account account;
@@ -17,7 +17,7 @@ public class SessionLog {
     public SessionLog() {
     }
 
-    public SessionLog(String sessionId, Date startTime, Date endTime, Float deductedAmount, Computer computer, Account account) {
+    public SessionLog(String sessionId, LocalDateTime startTime, LocalDateTime endTime, Float deductedAmount, Computer computer, Account account) {
         this.sessionId = sessionId;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -36,23 +36,23 @@ public class SessionLog {
         this.sessionId = sessionId;
     }
 
-    // Thời gian vào: Date (Thuộc tính mô tả)
+    // Thời gian vào: LocalDateTime (Thuộc tính mô tả)
     @Temporal(TemporalType.TIMESTAMP)
-    public Date getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    // Thời gian ra: Date (Thuộc tính mô tả)
+    // Thời gian ra: LocalDateTime (Thuộc tính mô tả)
     @Temporal(TemporalType.TIMESTAMP)
-    public Date getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
 
