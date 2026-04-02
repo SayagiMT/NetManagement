@@ -7,13 +7,13 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class frmMain extends JFrame {
+public class FrmMain extends JFrame {
     private JLabel lblWelcome;
     private JPanel pnlComputerMap;
     private JButton btnManageMembers;
 
 
-    public frmMain() {
+    public FrmMain() {
         setTitle("Phần Mềm Quản Lý Tiệm Net - Sơ Đồ Phòng Máy");
         setSize(1000, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,7 +33,7 @@ public class frmMain extends JFrame {
         // --- NÚT QUẢN LÝ HỘI VIÊN ---
         pnlHeader.add(Box.createHorizontalStrut(50)); // Tạo khoảng cách
 
-        btnManageMembers = new JButton("👥 QUẢN LÝ HỘI VIÊN");
+        btnManageMembers = new JButton("QUẢN LÝ HỘI VIÊN");
         btnManageMembers.setBackground(new Color(52, 152, 219)); // Màu xanh dương đậm chất quản lý
         btnManageMembers.setForeground(Color.WHITE);
         btnManageMembers.setFont(new Font("Arial", Font.BOLD, 14));

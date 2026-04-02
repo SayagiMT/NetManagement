@@ -2,12 +2,12 @@ package com.NetProject;
 
 import com.NetProject.controller.LoginController;
 import com.NetProject.service.AccountService;
-import com.NetProject.view.frmLogin;
+import com.NetProject.view.FrmLogin;
 
 public class MainApp {
     public static void main(String[] args) {
         // 1. Khởi tạo form Đăng nhập và Service
-        frmLogin loginView = new frmLogin();
+        FrmLogin loginView = new FrmLogin();
         AccountService accountService = new AccountService();
 
         // 2. Gắn Controller

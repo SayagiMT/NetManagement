@@ -3,13 +3,13 @@ package com.NetProject.view;
 import javax.swing.*;
 import java.awt.*;
 
-public class frmLogin extends JFrame {
+public class FrmLogin extends JFrame {
     private JPanel mainPanel;
     private JTextField txtUsername;
     private JPasswordField txtPassword;
     private JButton btnLogin;
 
-    public frmLogin() {
+    public FrmLogin() {
         // 1. Cấu hình cơ bản cho Frame
         setTitle("Đăng Nhập Hệ Thống Quản Lý Tiệm Net");
         setSize(400, 240);

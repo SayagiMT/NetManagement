@@ -4,8 +4,9 @@ import com.NetProject.dto.AccountDTO;
 import com.NetProject.dto.ComputerDTO;
 import com.NetProject.service.AccountService;
 import com.NetProject.service.ComputerService;
-import com.NetProject.view.frmCustomer;
-import com.NetProject.view.frmMain;
+import com.NetProject.view.FrmCustomer;
+import com.NetProject.view.FrmMain;
+import com.NetProject.view.FrmOrder;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,11 +14,11 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class MainController {
-    private frmMain mainView;
+    private FrmMain mainView;
     private ComputerService computerService;
     private AccountDTO loggedInUser;
 
-    public MainController(frmMain view, AccountDTO user) {
+    public MainController(FrmMain view, AccountDTO user) {
         this.mainView = view;
         this.loggedInUser = user;
         this.computerService = new ComputerService();
@@ -34,7 +35,7 @@ public class MainController {
         this.mainView.getBtnManageMembers().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frmCustomer memberView = new frmCustomer();
+                FrmCustomer memberView = new FrmCustomer();
 
                 // TRUYỀN loggedInUser SANG CHO MemberController
                 new CustomerController(memberView, loggedInUser);
@@ -140,7 +141,7 @@ public class MainController {
 
                         if (choice == 0) {
                             // CHỌN 1: KHÁCH GỌI ĐỒ ĂN (GHI NỢ)
-                            com.NetProject.view.frmOrder orderView = new com.NetProject.view.frmOrder();
+                            FrmOrder orderView = new FrmOrder();
                             new com.NetProject.controller.OrderController(orderView, loggedInUser, computerId);
                             orderView.setVisible(true);
 

@@ -13,7 +13,7 @@ public class TestLargeDataSeeder {
         ZoneDAO zoneDAO = new ZoneDAO();
         ComputerDAO computerDAO = new ComputerDAO();
         AccountDAO accountDAO = new AccountDAO();
-        MemberDAO customerDAO = new MemberDAO();
+        CustomerDAO customerDAO = new CustomerDAO();
         EmployeeDAO employeeDAO = new EmployeeDAO();
         ServiceItemDAO serviceItemDAO = new ServiceItemDAO();
 

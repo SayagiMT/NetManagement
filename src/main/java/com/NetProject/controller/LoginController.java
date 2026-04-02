@@ -2,17 +2,17 @@ package com.NetProject.controller;
 
 import com.NetProject.dto.AccountDTO;
 import com.NetProject.service.AccountService;
-import com.NetProject.view.frmLogin;
-import com.NetProject.view.frmMain;
+import com.NetProject.view.FrmLogin;
+import com.NetProject.view.FrmMain;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoginController {
-    private frmLogin view;
+    private FrmLogin view;
     private AccountService service;
 
-    public LoginController(frmLogin view, AccountService service) {
+    public LoginController(FrmLogin view, AccountService service) {
         this.view = view;
         this.service = service;
 
@@ -44,7 +44,7 @@ public class LoginController {
             view.dispose(); // Đóng form login
 
             // Mở giao diện Main
-            com.NetProject.view.frmMain mainForm = new com.NetProject.view.frmMain();
+            FrmMain mainForm = new FrmMain();
             new com.NetProject.controller.MainController(mainForm, account);
             mainForm.setVisible(true);
         } else {
