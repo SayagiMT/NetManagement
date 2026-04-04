@@ -14,7 +14,7 @@ public class frmMain extends JFrame {
     private JButton btnReport;
     private JButton btnManageMenu;
     private JButton btnManageEmployee;
-
+    private JButton btnLogout;
 
     public frmMain() {
         setTitle("Phần Mềm Quản Lý Tiệm Net - Sơ Đồ Phòng Máy");
@@ -52,6 +52,10 @@ public class frmMain extends JFrame {
         pnlHeader.add(Box.createHorizontalStrut(10));
         btnManageEmployee = new JButton("Quản Lý Nhân Sự");
         pnlHeader.add(btnManageEmployee);
+        // --- NÚT ĐĂNG XUẤT ---
+        pnlHeader.add(Box.createHorizontalStrut(10));
+        btnLogout = new JButton("Đăng xuất");
+        pnlHeader.add(btnLogout);
         // ----------------------------
 
         add(pnlHeader, BorderLayout.NORTH);
@@ -128,5 +132,9 @@ public class frmMain extends JFrame {
 
     public JButton getBtnManageEmployee() {
         return btnManageEmployee;
+    }
+
+    public JButton getBtnLogout() {
+        return btnLogout;
     }
 }

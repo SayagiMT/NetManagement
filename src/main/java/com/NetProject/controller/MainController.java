@@ -68,7 +68,7 @@ public class MainController {
             // 🛡️ LỚP KHIÊN BẢO VỆ: KIỂM TRA QUYỀN TRUY CẬP
             if (!loggedInUser.getRole().equalsIgnoreCase("Admin")) {
                 JOptionPane.showMessageDialog(null,
-                        "TRUY CẬP BỊ TỪ CHỐI!\nChỉ có Quản lý (Admin) mới có quyền truy cập khu vực này.",
+                        "TRUY CẬP BỊ TỪ CHỐI!\nChỉ có Admin mới có quyền truy cập khu vực này.",
                         "Cảnh Báo Quyền Hạn",
                         JOptionPane.WARNING_MESSAGE);
                 return; // Đá văng ra ngoài, không cho chạy code mở form bên dưới
@@ -81,6 +81,30 @@ public class MainController {
                 empView.setVisible(true);
             } catch (Exception ex) {
                 ex.printStackTrace();
+            }
+        });
+
+        // SỰ KIỆN: ĐĂNG XUẤT KHỎI HỆ THỐNG
+        this.mainView.getBtnLogout().addActionListener(e -> {
+            // Hiển thị hộp thoại xác nhận
+            int confirm = JOptionPane.showConfirmDialog(
+                    mainView,
+                    "Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?",
+                    "Xác nhận đăng xuất",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            // Nếu chọn YES -> Thoát và gọi lại Login
+            if (confirm == JOptionPane.YES_OPTION) {
+                mainView.dispose(); // Tắt Main form hiện tại
+
+                com.NetProject.view.frmLogin loginView = new com.NetProject.view.frmLogin();
+                com.NetProject.service.AccountService accountService = new com.NetProject.service.AccountService();
+                new com.NetProject.controller.LoginController(loginView, accountService);
+
+                loginView.setLocationRelativeTo(null);
+                loginView.setVisible(true);
             }
         });
     }
@@ -160,9 +184,7 @@ public class MainController {
                             }
                         }
 
-                        // ==========================================
                         // TRƯỜNG HỢP 2: MÁY ĐANG SỬ DỤNG (MÀU ĐỎ) -> MENU DỊCH VỤ
-                        // ==========================================
                     } else if (clickedPc.getStatus().equalsIgnoreCase("In Use")) {
 
                         String[] options = {"Gọi Dịch Vụ", "Tính Tiền & Đóng Máy", "Hủy Bỏ"};
