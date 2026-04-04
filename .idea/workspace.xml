@@ -5,20 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05e7b50d-05ba-4ab8-aa1c-5d88f68b3790" name="Changes" comment="Thêm tính năng quản lí nhân viên và thực đơn">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/dao/MemberDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/dao/CustomerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/entity/Invoice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/entity/Invoice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/entity/SessionLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/entity/SessionLog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/service/ComputerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/service/ComputerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/service/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/view/FrmMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/view/FrmMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/view/FrmCustomer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/view/FrmLogin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmMain.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/view/FrmOrder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/test/TestLargeDataSeeder.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,29 +49,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.MainApp.executor": "Run",
-    "Application.TestLargeDataSeeder.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "Merging master",
-    "git.auto.fetch.suggestion.counter": "1",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/vandu/SPKT/LapTrinhWindow/NetManagement/src/main/java/com/NetProject/util",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "D:/Code/LT Windows/NetManagement/src/src/Main.java",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.MainApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TestLargeDataSeeder.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git.auto.fetch.suggestion.counter&quot;: &quot;1&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/vandu/SPKT/LapTrinhWindow/NetManagement/src/main/java/com/NetProject/util&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;D:/Code/LT Windows/NetManagement/src/src/Main.java&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\vandu\SPKT\LapTrinhWindow\NetManagement\src\main\java\com\NetProject\util" />
@@ -143,7 +130,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775278735356</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Thêm tính năng quản lí nhân viên và thực đơn">
+      <option name="closed" value="true" />
+      <created>1775279025973</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1775279025973</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
