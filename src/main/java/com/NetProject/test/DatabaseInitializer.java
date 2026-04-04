@@ -22,9 +22,6 @@ public class DatabaseInitializer {
         HibernateUtil.shutdown();
     }
 
-    /**
-     * Dùng Native SQL của Hibernate để tắt khóa ngoại và quét sạch toàn bộ bảng
-     */
     private static void clearOldData() {
         Transaction tr = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -53,9 +50,6 @@ public class DatabaseInitializer {
         }
     }
 
-    /**
-     * Sử dụng chính các DAO đã viết để thêm dữ liệu mẫu (Đúng chuẩn cấu trúc MVC/DAO)
-     */
     private static void seedData() {
         ZoneDAO zoneDAO = new ZoneDAO();
         AccountDAO accDAO = new AccountDAO();
@@ -75,12 +69,12 @@ public class DatabaseInitializer {
         zoneDAO.create(z3);
 
         // ==========================================
-        // 2. TẠO TÀI KHOẢN VÀ NHÂN VIÊN (1 Admin, 3 Nhân viên)
+        // 2. TẠO TÀI KHOẢN VÀ NHÂN VIÊN (Mật khẩu đa dạng)
         // ==========================================
-        Account aAdmin = new Account("ACC_ADMIN", "admin", "123", 0f, "Admin");
-        Account aEmp1 = new Account("ACC_EMP01", "nhanvien1", "123", 0f, "Employee");
-        Account aEmp2 = new Account("ACC_EMP02", "nhanvien2", "123", 0f, "Employee");
-        Account aEmp3 = new Account("ACC_EMP03", "nhanvien3", "123", 0f, "Employee");
+        Account aAdmin = new Account("ACC_ADMIN", "admin", "admin@2026", 0f, "Admin");
+        Account aEmp1 = new Account("ACC_EMP01", "nhanvien1", "nv1@pass", 0f, "Employee");
+        Account aEmp2 = new Account("ACC_EMP02", "nhanvien2", "nv2@pass", 0f, "Employee");
+        Account aEmp3 = new Account("ACC_EMP03", "nhanvien3", "nv3@pass", 0f, "Employee");
 
         accDAO.create(aAdmin);
         accDAO.create(aEmp1);
@@ -93,29 +87,29 @@ public class DatabaseInitializer {
         empDAO.create(new Employee("EMP_004", "Phạm Hoàng Long", "Ca Tối", aEmp3));
 
         // ==========================================
-        // 3. TẠO 20 KHÁCH HÀNG (HỘI VIÊN) BẰNG MẢNG
+        // 3. TẠO 20 KHÁCH HÀNG (Thêm cột thứ 5 chứa mật khẩu riêng)
         // ==========================================
         String[][] memberData = {
-                {"ACC_MEM01", "nhan_sv_ute", "Nguyễn Hiếu Kì Nhân", "50000"},
-                {"ACC_MEM02", "hcmute_sv", "Lí Hào Kiệt", "15000"},
-                {"ACC_MEM03", "thanh_vip", "Lê Thanh Tùng", "100000"},
-                {"ACC_MEM04", "hoang_pro", "Phạm Minh Hoàng", "20000"},
-                {"ACC_MEM05", "dung_tk", "Trần Trí Dũng", "0"},
-                {"ACC_MEM06", "linh_ute", "Nguyễn Thùy Linh", "35000"},
-                {"ACC_MEM07", "nam_deptrai", "Lê Hoài Nam", "50000"},
-                {"ACC_MEM08", "khanh_gamer", "Bùi Quốc Khánh", "150000"},
-                {"ACC_MEM09", "phuc_lol", "Vũ Hoàng Phúc", "10000"},
-                {"ACC_MEM10", "tuan_anh99", "Đặng Tuấn Anh", "80000"},
-                {"ACC_MEM11", "huy_gaming", "Đỗ Gia Huy", "40000"},
-                {"ACC_MEM12", "bao_ngoc", "Nguyễn Bảo Ngọc", "60000"},
-                {"ACC_MEM13", "quang_hai", "Hồ Quang Hải", "0"},
-                {"ACC_MEM14", "minh_khoi", "Ngô Minh Khôi", "25000"},
-                {"ACC_MEM15", "duc_thang", "Trương Đức Thắng", "120000"},
-                {"ACC_MEM16", "thao_nhung", "Lý Thảo Nhung", "30000"},
-                {"ACC_MEM17", "tien_dat", "Đoàn Tiến Đạt", "15000"},
-                {"ACC_MEM18", "hai_dang", "Vương Hải Đăng", "45000"},
-                {"ACC_MEM19", "quoc_bao", "Mai Quốc Bảo", "90000"},
-                {"ACC_MEM20", "anh_tu", "Trịnh Anh Tú", "20000"}
+                {"ACC_MEM01", "nhan_sv_ute", "Nguyễn Hiếu Kì Nhân", "50000", "nhan@2026"},
+                {"ACC_MEM02", "hcmute_sv", "Lí Hào Kiệt", "15000", "kiet!ute"},
+                {"ACC_MEM03", "thanh_vip", "Lê Thanh Tùng", "100000", "tungpro99"},
+                {"ACC_MEM04", "hoang_pro", "Phạm Minh Hoàng", "20000", "hoang1234"},
+                {"ACC_MEM05", "dung_tk", "Trần Trí Dũng", "0", "dung_tk99"},
+                {"ACC_MEM06", "linh_ute", "Nguyễn Thùy Linh", "35000", "linhlinh"},
+                {"ACC_MEM07", "nam_deptrai", "Lê Hoài Nam", "50000", "nam2000"},
+                {"ACC_MEM08", "khanh_gamer", "Bùi Quốc Khánh", "150000", "khanhpro"},
+                {"ACC_MEM09", "phuc_lol", "Vũ Hoàng Phúc", "10000", "phuclol_1"},
+                {"ACC_MEM10", "tuan_anh99", "Đặng Tuấn Anh", "80000", "tuananh99"},
+                {"ACC_MEM11", "huy_gaming", "Đỗ Gia Huy", "40000", "huygaming"},
+                {"ACC_MEM12", "bao_ngoc", "Nguyễn Bảo Ngọc", "60000", "ngocngoc"},
+                {"ACC_MEM13", "quang_hai", "Hồ Quang Hải", "0", "haiquang!"},
+                {"ACC_MEM14", "minh_khoi", "Ngô Minh Khôi", "25000", "khoi2026"},
+                {"ACC_MEM15", "duc_thang", "Trương Đức Thắng", "120000", "thangduc"},
+                {"ACC_MEM16", "thao_nhung", "Lý Thảo Nhung", "30000", "nhungthao"},
+                {"ACC_MEM17", "tien_dat", "Đoàn Tiến Đạt", "15000", "dattien1"},
+                {"ACC_MEM18", "hai_dang", "Vương Hải Đăng", "45000", "danghai2"},
+                {"ACC_MEM19", "quoc_bao", "Mai Quốc Bảo", "90000", "baoquoc3"},
+                {"ACC_MEM20", "anh_tu", "Trịnh Anh Tú", "20000", "tuanh456"}
         };
 
         for (int i = 0; i < memberData.length; i++) {
@@ -123,12 +117,12 @@ public class DatabaseInitializer {
             String user = memberData[i][1];
             String name = memberData[i][2];
             float bal = Float.parseFloat(memberData[i][3]);
+            String pass = memberData[i][4]; // Lấy mật khẩu xịn từ mảng
 
-            // Tạo mã ID động: CUS_01 -> CUS_20
             String cusId = String.format("CUS_%02d", i + 1);
-            String phone = String.format("0901%06d", i + 1); // Số điện thoại giả lập
+            String phone = String.format("0901%06d", i + 1);
 
-            Account aMem = new Account(accId, user, "123", bal, "Member");
+            Account aMem = new Account(accId, user, pass, bal, "Member");
             accDAO.create(aMem);
 
             Customer cus = new Customer(cusId, name, phone, aMem);
@@ -136,25 +130,20 @@ public class DatabaseInitializer {
         }
 
         // ==========================================
-        // 4. TẠO 20 SƠ ĐỒ MÁY TÍNH BẰNG VÒNG LẶP
+        // 4. TẠO 20 SƠ ĐỒ MÁY TÍNH
         // ==========================================
-        // Khu Thường: 10 máy (PC_01 -> PC_10)
         for (int i = 1; i <= 10; i++) {
             compDAO.create(new Computer(String.format("PC_%02d", i), "Máy Thường " + String.format("%02d", i), "Available", z1));
         }
-
-        // Khu VIP: 6 máy (PC_11 -> PC_16)
         for (int i = 11; i <= 16; i++) {
             compDAO.create(new Computer(String.format("PC_%02d", i), "Máy VIP " + String.format("%02d", i - 10), "Available", z2));
         }
-
-        // Khu Thi Đấu: 4 máy (PC_17 -> PC_20)
         for (int i = 17; i <= 20; i++) {
             compDAO.create(new Computer(String.format("PC_%02d", i), "Máy Thi Đấu " + String.format("%02d", i - 16), "Available", z3));
         }
 
         // ==========================================
-        // 5. TẠO THỰC ĐƠN ĐỒ ĂN/THỨC UỐNG (GIỮ NGUYÊN)
+        // 5. TẠO THỰC ĐƠN ĐỒ ĂN/THỨC UỐNG
         // ==========================================
         svcDAO.create(new ServiceItem("SVC_01", "Nước Tăng Lực Sting", "Thức uống", 15000f, 100));
         svcDAO.create(new ServiceItem("SVC_02", "Nước Lọc Aquafina", "Thức uống", 10000f, 50));
