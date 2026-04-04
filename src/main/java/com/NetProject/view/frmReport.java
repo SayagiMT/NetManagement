@@ -10,7 +10,7 @@ public class frmReport extends JFrame {
     private JLabel lblTotalRevenue;
 
     public frmReport() {
-        setTitle("Báo Cáo Doanh Thu Thực Tế");
+        setTitle("Báo Cáo Doanh Thu");
         setSize(800, 500);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
