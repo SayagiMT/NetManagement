@@ -130,16 +130,26 @@ public class DatabaseInitializer {
         }
 
         // ==========================================
-        // 4. TẠO 20 SƠ ĐỒ MÁY TÍNH
         // ==========================================
+        // 4. TẠO 20 SƠ ĐỒ MÁY TÍNH (Có 4 máy đang bảo trì)
+        // ==========================================
+
+        // Khu Thường: 10 máy (PC_04 và PC_09 bảo trì)
         for (int i = 1; i <= 10; i++) {
-            compDAO.create(new Computer(String.format("PC_%02d", i), "Máy Thường " + String.format("%02d", i), "Available", z1));
+            String status = (i == 4 || i == 9) ? "Maintenance" : "Available";
+            compDAO.create(new Computer(String.format("PC_%02d", i), "Máy Thường " + String.format("%02d", i), status, z1));
         }
+
+        // Khu VIP: 6 máy (PC_13 bảo trì)
         for (int i = 11; i <= 16; i++) {
-            compDAO.create(new Computer(String.format("PC_%02d", i), "Máy VIP " + String.format("%02d", i - 10), "Available", z2));
+            String status = (i == 13) ? "Maintenance" : "Available";
+            compDAO.create(new Computer(String.format("PC_%02d", i), "Máy VIP " + String.format("%02d", i - 10), status, z2));
         }
+
+        // Khu Thi Đấu: 4 máy (PC_18 bảo trì)
         for (int i = 17; i <= 20; i++) {
-            compDAO.create(new Computer(String.format("PC_%02d", i), "Máy Thi Đấu " + String.format("%02d", i - 16), "Available", z3));
+            String status = (i == 18) ? "Maintenance" : "Available";
+            compDAO.create(new Computer(String.format("PC_%02d", i), "Máy Thi Đấu " + String.format("%02d", i - 16), status, z3));
         }
 
         // ==========================================
