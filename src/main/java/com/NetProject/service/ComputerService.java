@@ -92,9 +92,7 @@ public class ComputerService {
             SessionLog log = sessionLogDAO.getActiveSessionByComputer(computerId);
             if (log == null) return "Lỗi: Không tìm thấy phiên chơi!";
 
-            // ==========================================
             // PHẦN 1: TÍNH TIỀN GIỜ CHƠI
-            // ==========================================
             LocalDateTime now = LocalDateTime.now();
             log.setEndTime(now);
 
@@ -110,9 +108,7 @@ public class ComputerService {
             float pricePerHour = pc.getZone().getHourlyRate();
             float totalFee = hoursPlayed * pricePerHour;
 
-            // ==========================================
             // PHẦN 2: TÍNH TIỀN DỊCH VỤ
-            // ==========================================
             List<Invoice> unpaidInvoices = invoiceDAO.getUnpaidInvoicesByComputer(computerId);
             float totalServiceFee = 0;
 
@@ -122,9 +118,7 @@ public class ComputerService {
                 invoiceDAO.update(inv);
             }
 
-            // ==========================================
             // PHẦN 3: GỘP BILL VÀ GIẢI PHÓNG MÁY
-            // ==========================================
             float finalTotal = totalFee + totalServiceFee;
             log.setDeductedAmount(finalTotal);
             sessionLogDAO.update(log);
@@ -132,9 +126,8 @@ public class ComputerService {
             pc.setStatus("Available");
             computerDAO.update(pc);
 
-            // ==========================================
+
             // PHẦN 4: IN HÓA ĐƠN CÓ TÊN THU NGÂN
-            // ==========================================
             Account player = log.getAccount();
 
             if (player != null && player.getRole().equalsIgnoreCase("Member")) {

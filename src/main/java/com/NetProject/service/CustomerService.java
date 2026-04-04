@@ -52,16 +52,25 @@ public class CustomerService {
         }
     }
 
-    // 3. Cập nhật thông tin (Đổi pass)
-    public boolean updateMember(String accountId, String newPassword) {
+    // 3. Cập nhật thông tin
+    public boolean updateMember(String accountId, String newUsername, String newPassword) {
         try {
-            Account acc = accountDAO.findById(accountId);
-            if (acc != null) {
-                acc.setPassword(newPassword);
-                accountDAO.update(acc);
-                return true;
+            // 1. Tìm tài khoản dưới Database
+            com.NetProject.entity.Account acc = accountDAO.findById(accountId);
+
+            if (acc == null) {
+                return false;
             }
-            return false;
+
+            // 2. Cập nhật Username và Password mới
+            acc.setUsername(newUsername);
+            if (newPassword != null && !newPassword.trim().isEmpty()) {
+                acc.setPassword(newPassword);
+            }
+
+            // 3. Lưu xuống Database
+            accountDAO.update(acc);
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;

@@ -19,7 +19,7 @@ public class CustomerController {
     private List<CustomerDTO> memberList;
     private AccountDTO loggedInUser;
 
-    // FIX LỖI: Đã thêm tham số AccountDTO user vào đây
+
     public CustomerController(frmCustomer view, AccountDTO user) {
         this.view = view;
         this.loggedInUser = user; // Lưu lại người đang đăng nhập
@@ -96,7 +96,7 @@ public class CustomerController {
             }
         });
 
-        // 4. Nút Cập Nhật Mật Khẩu
+        // 4. Nút Cập Nhật (Tên đăng nhập & Mật Khẩu)
         view.getBtnUpdate().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -106,12 +106,20 @@ public class CustomerController {
                     return;
                 }
 
-                String pass = new String(view.getTxtPassword().getPassword());
-                if (service.updateMember(id, pass)) {
-                    view.showMessage("Cập nhật mật khẩu thành công!", false);
+                // Lấy thêm username và password từ giao diện
+                String newUsername = view.getTxtUsername().getText().trim();
+                String newPass = new String(view.getTxtPassword().getPassword());
+
+                if (newUsername.isEmpty()) {
+                    view.showMessage("Tên đăng nhập không được để trống!", true);
+                    return;
+                }
+
+                if (service.updateMember(id, newUsername, newPass)) {
+                    view.showMessage("Cập nhật thông tin hội viên thành công!", false);
                     loadData();
                 } else {
-                    view.showMessage("Lỗi khi cập nhật!", true);
+                    view.showMessage("Lỗi khi cập nhật! (Có thể tên đăng nhập đã bị trùng)", true);
                 }
             }
         });

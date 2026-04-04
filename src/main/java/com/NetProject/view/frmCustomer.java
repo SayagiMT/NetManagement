@@ -49,13 +49,11 @@ public class frmCustomer extends JFrame {
         JPanel pnlButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
 
         btnAdd = new JButton("Thêm Mới");
-        btnUpdate = new JButton("Sửa Mật Khẩu");
+        btnUpdate = new JButton("Cập Nhật");
         btnDelete = new JButton("Xóa Hội Viên");
         btnClear = new JButton("Làm Mới Form");
-
-        // Khởi tạo Nút Nạp Tiền
         btnTopUp = new JButton("Nạp Tiền");
-        btnTopUp.setFont(new Font("Arial", Font.BOLD, 12));
+
 
         pnlButtons.add(btnAdd);
         pnlButtons.add(btnUpdate);

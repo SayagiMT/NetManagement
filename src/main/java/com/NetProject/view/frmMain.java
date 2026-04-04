@@ -38,11 +38,6 @@ public class frmMain extends JFrame {
         btnManageMembers = new JButton("Quản Lý Hội Viên");
         pnlHeader.add(btnManageMembers);
 
-        // --- NÚT BÁO CÁO DOANH THU ---
-        pnlHeader.add(Box.createHorizontalStrut(10));
-        btnReport = new JButton("Báo Cáo Doanh Thu");
-        pnlHeader.add(btnReport);
-
         // --- NÚT QUẢN LÝ DỊCH VỤ ---
         pnlHeader.add(Box.createHorizontalStrut(10));
         btnManageMenu = new JButton("Quản Lý Dịch Vụ");
@@ -52,6 +47,12 @@ public class frmMain extends JFrame {
         pnlHeader.add(Box.createHorizontalStrut(10));
         btnManageEmployee = new JButton("Quản Lý Nhân Sự");
         pnlHeader.add(btnManageEmployee);
+
+        // --- NÚT BÁO CÁO DOANH THU ---
+        pnlHeader.add(Box.createHorizontalStrut(10));
+        btnReport = new JButton("Báo Cáo Doanh Thu");
+        pnlHeader.add(btnReport);
+
         // --- NÚT ĐĂNG XUẤT ---
         pnlHeader.add(Box.createHorizontalStrut(10));
         btnLogout = new JButton("Đăng xuất");
