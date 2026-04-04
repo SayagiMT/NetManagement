@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.util.List;
 
 public class MenuController {
-    // Thêm 'final' theo gợi ý của IDE cho an toàn
     private final frmMenu view;
     private final MenuService service;
     private List<ServiceItem> list;
@@ -25,8 +24,8 @@ public class MenuController {
         view.getModel().setRowCount(0);
         for (ServiceItem i : list) {
             view.getModel().addRow(new Object[]{
-                    i.getServiceId(),    // Đã đổi thành getServiceId
-                    i.getServiceName(), // Đã đổi thành getServiceName
+                    i.getServiceId(),
+                    i.getServiceName(),
                     String.format("%,.0f", i.getPrice()),
                     i.getStockQuantity()
             });
@@ -39,8 +38,8 @@ public class MenuController {
             int row = view.getTblMenu().getSelectedRow();
             if (row >= 0 && !e.getValueIsAdjusting()) {
                 ServiceItem item = list.get(row);
-                view.getTxtId().setText(item.getServiceId());   // Đã đổi
-                view.getTxtName().setText(item.getServiceName()); // Đã đổi
+                view.getTxtId().setText(item.getServiceId());
+                view.getTxtName().setText(item.getServiceName());
                 view.getTxtPrice().setText(String.valueOf(item.getPrice()));
                 view.getTxtStock().setText(String.valueOf(item.getStockQuantity()));
             }

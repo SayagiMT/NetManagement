@@ -68,7 +68,7 @@ public class CustomerService {
         }
     }
 
-    // 4. Xóa Hội viên (Kết hợp Hard Delete và Soft Delete)
+    // 4. Xóa Hội viên
     public boolean deleteMember(String accountId) {
         try {
             Account acc = accountDAO.findById(accountId);
@@ -95,8 +95,8 @@ public class CustomerService {
         }
     }
 
-    // 5. Nạp tiền vào tài khoản Hội viên (Có lưu người thu tiền)
-    public boolean topUp(String accountId, float amount, String employeeId) { // <-- Thêm tham số employeeId
+    // 5. Nạp tiền vào tài khoản Hội viên
+    public boolean topUp(String accountId, float amount, String employeeId) {
         try {
             Account acc = accountDAO.findById(accountId);
 
@@ -118,7 +118,7 @@ public class CustomerService {
                 trans.setAccount(acc); // Khách nạp
 
                 if (emp != null) {
-                    trans.setEmployee(emp); // Gắn Nhân viên / Admin thu tiền
+                    trans.setEmployee(emp);
                 }
 
                 // Lưu xuống DB

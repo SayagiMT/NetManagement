@@ -57,17 +57,14 @@ public class frmMain extends JFrame {
         add(pnlHeader, BorderLayout.NORTH);
 
         // 2. Center: Khu vực lưới sơ đồ máy tính
-        // GridLayout(0, 5) nghĩa là: Cứ đủ 5 cột thì tự động xuống dòng mới. Khoảng cách ngang/dọc là 15px
         pnlComputerMap = new JPanel(new GridLayout(0, 5, 15, 15));
         pnlComputerMap.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
-        // Khóa chiều cao của Panel chứa sơ đồ lại bằng cách nhét lên phía Bắc (NORTH) của một panel phụ
         JPanel pnlWrapper = new JPanel(new BorderLayout());
         pnlWrapper.add(pnlComputerMap, BorderLayout.NORTH);
 
         // Gắn thanh cuộn phòng trường hợp số máy quá nhiều vượt quá màn hình
         JScrollPane scrollPane = new JScrollPane(pnlWrapper);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16); // Lăn chuột cho mượt
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         add(scrollPane, BorderLayout.CENTER);
     }
 
@@ -75,15 +72,13 @@ public class frmMain extends JFrame {
         lblWelcome.setText(text);
     }
 
-    // ==================================================
     // HÀM VẼ SƠ ĐỒ MÁY TÍNH TỰ ĐỘNG
-    // ==================================================
     public void drawComputerMap(List<ComputerDTO> computers, ActionListener onPcClick) {
-        pnlComputerMap.removeAll(); // Xóa sạch bản đồ cũ trước khi vẽ lại
+        pnlComputerMap.removeAll();
 
         for (ComputerDTO pc : computers) {
             JButton btnPC = new JButton();
-            btnPC.setPreferredSize(new Dimension(160, 120)); // Khóa cứng kích thước mỗi máy
+            btnPC.setPreferredSize(new Dimension(160, 120));
 
             // Dùng thủ thuật HTML để JButton hiển thị được nhiều dòng chữ
             String htmlText = "<html><center>"
@@ -103,7 +98,7 @@ public class frmMain extends JFrame {
             } else if (pc.getStatus().equalsIgnoreCase("Available")) {
                 btnPC.setBackground(new Color(46, 204, 113)); // Màu Xanh lá
                 btnPC.setForeground(Color.BLACK);
-            } else {
+            } else if(pc.getStatus().equalsIgnoreCase("Maintenance")){
                 btnPC.setBackground(Color.GRAY);              // Màu xám (Bảo trì)
                 btnPC.setForeground(Color.WHITE);
             }

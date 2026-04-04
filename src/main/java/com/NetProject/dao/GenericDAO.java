@@ -17,9 +17,7 @@ public class GenericDAO<T, ID> {
         this.entityClass = entityClass;
     }
 
-    // =========================
-    // 🔥 Transaction Template (Dùng cho Thêm/Sửa/Xóa)
-    // =========================
+    // Transaction Template (Dùng cho Thêm/Sửa/Xóa)
     protected void executeTransaction(Consumer<Session> action) {
         Transaction tr = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -44,23 +42,21 @@ public class GenericDAO<T, ID> {
         }
     }
 
-    // =========================
-    // 🟢 CREATE
-    // =========================
+
+    // CREATE
     public void create(T entity) {
         executeTransaction(session -> session.persist(entity));
     }
 
-    // =========================
-    // 🟡 READ BY ID
-    // =========================
+
+    // READ BY ID
+
     public T findById(ID id) {
         return executeQuery(session -> session.find(entityClass, id));
     }
 
-    // =========================
-    // 🟡 READ ALL
-    // =========================
+    // READ ALL
+
     public List<T> findAll() {
         List<T> result = executeQuery(session ->
                 session.createQuery("FROM " + entityClass.getSimpleName(), entityClass).list()
@@ -68,16 +64,14 @@ public class GenericDAO<T, ID> {
         return result != null ? result : Collections.emptyList();
     }
 
-    // =========================
-    // 🔵 UPDATE
-    // =========================
+    // UPDATE
+
     public void update(T entity) {
         executeTransaction(session -> session.merge(entity));
     }
 
-    // =========================
-    // 🔴 DELETE
-    // =========================
+    // DELETE
+
     public void delete(T entity) {
         executeTransaction(session -> {
             T managedEntity = session.contains(entity) ? entity : session.merge(entity);
@@ -85,9 +79,8 @@ public class GenericDAO<T, ID> {
         });
     }
 
-    // =========================
-    // 🔴 DELETE BY ID
-    // =========================
+    // DELETE BY ID
+
     public void deleteById(ID id) {
         executeTransaction(session -> {
             T entity = session.find(entityClass, id);

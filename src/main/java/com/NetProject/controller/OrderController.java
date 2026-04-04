@@ -17,18 +17,14 @@ public class OrderController {
     private frmOrder view;
     private OrderService service;
     private AccountDTO loggedInUser;
-
-    // BIẾN MỚI: Khai báo thêm mã máy tính
     private String computerId;
-
     private List<MenuItemDTO> menuList;
     private List<CartItemDTO> cartList;
 
-    // CONSTRUCTOR MỚI: Nhận đủ 3 tham số (view, user, computerId)
     public OrderController(frmOrder view, AccountDTO user, String computerId) {
         this.view = view;
         this.loggedInUser = user;
-        this.computerId = computerId; // Nhận và lưu mã máy từ MainController truyền sang
+        this.computerId = computerId;
         this.service = new OrderService();
         this.cartList = new ArrayList<>();
 

@@ -5,7 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05e7b50d-05ba-4ab8-aa1c-5d88f68b3790" name="Changes" comment="Quản lí hội viên">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/test/DatabaseInitializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/MainApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/MenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/dao/GenericDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/dao/GenericDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/dao/InvoiceDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/dao/InvoiceDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/dto/DepositTransactionDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/dto/EmployeeDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/dto/ServiceItemDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/service/ComputerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/service/ComputerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/service/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/service/CustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/service/MenuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/service/MenuService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/service/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/service/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/service/ReportService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/service/ReportService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmEmployee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmEmployee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmOrder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmReport.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,6 +76,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.DatabaseInitializer.executor&quot;: &quot;Run&quot;,
     &quot;Application.MainApp.executor&quot;: &quot;Run&quot;,
     &quot;Application.TestLargeDataSeeder.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
@@ -139,7 +164,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775279025973</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Quản lí hội viên">
+      <option name="closed" value="true" />
+      <created>1775288498288</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1775288498289</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,9 +183,9 @@
     <MESSAGE value="Add DTO" />
     <MESSAGE value="giao diện đăng nhập + tính năng gọi món, tính tiền." />
     <MESSAGE value="Sửa lại tính năng đăng nhập (chỉ admin với nhân viên mới vào được)" />
-    <MESSAGE value="Quản lí hội viên" />
     <MESSAGE value="Thêm tính năng quản lí nhân viên và thực đơn" />
-    <option name="LAST_COMMIT_MESSAGE" value="Thêm tính năng quản lí nhân viên và thực đơn" />
+    <MESSAGE value="Quản lí hội viên" />
+    <option name="LAST_COMMIT_MESSAGE" value="Quản lí hội viên" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

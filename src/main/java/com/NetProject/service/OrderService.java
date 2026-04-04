@@ -66,16 +66,10 @@ public class OrderService {
             invoice.setTotalAmount(totalAmount);
             invoice.setAccount(acc);
 
-            // LOGIC QUAN TRỌNG:
-            if (computerId != null) {
-                // Nếu có máy tính -> Gắn máy vào và để trạng thái "Chưa thanh toán"
-                Computer pc = computerDAO.findById(computerId);
-                invoice.setComputer(pc);
-                invoice.setStatus("Chưa thanh toán");
-            } else {
-                // Nếu khách mua tại quầy -> "Đã giao" luôn
-                invoice.setStatus("Đã giao");
-            }
+            // Bắt buộc gắn máy và ghi nợ
+            Computer pc = computerDAO.findById(computerId);
+            invoice.setComputer(pc);
+            invoice.setStatus("Chưa thanh toán");
 
             invoiceDAO.create(invoice);
 
@@ -84,12 +78,12 @@ public class OrderService {
                 ServiceItem serviceItem = serviceItemDAO.findById(item.getServiceId());
                 if (serviceItem != null) {
 
-                    // Lưu Chi tiết (Truyền đúng invoiceId vừa tạo ở trên vào)
+                    // Lưu Chi tiết
                     InvoiceDetailId detailId = new InvoiceDetailId(invoiceId, serviceItem.getServiceId());
                     InvoiceDetail detail = new InvoiceDetail(detailId, item.getQuantity(), item.getPrice(), invoice, serviceItem);
                     invoiceDetailDAO.update(detail);
 
-                    // Trừ Tồn kho (Có kiểm tra null an toàn)
+                    // Trừ Tồn kho
                     if (serviceItem.getStockQuantity() != null) {
                         int newStock = serviceItem.getStockQuantity() - item.getQuantity();
                         serviceItem.setStockQuantity(newStock);

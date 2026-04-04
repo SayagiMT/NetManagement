@@ -11,7 +11,7 @@ public class frmMenu extends JFrame {
     private DefaultTableModel model;
 
     public frmMenu() {
-        setTitle("Quản Lý Thực Đơn (F&B)");
+        setTitle("Quản Lý Thực Đơn");
         setSize(700, 500);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));

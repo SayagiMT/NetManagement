@@ -10,7 +10,7 @@ public class InvoiceDAO extends GenericDAO<Invoice, String> {
         super(Invoice.class);
     }
 
-    // Lấy hóa đơn theo trạng thái (VD: Chưa thanh toán)
+    // Lấy hóa đơn theo trạng thái
     public List<Invoice> getInvoicesByStatus(String status) {
         List<Invoice> result = executeQuery(session ->
                 session.createQuery("FROM Invoice i WHERE i.status = :trangThai", Invoice.class)

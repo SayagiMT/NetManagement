@@ -28,9 +28,7 @@ public class MainController {
         // Vẽ sơ đồ phòng máy
         loadComputerMap();
 
-        // ==========================================
         // SỰ KIỆN: MỞ FORM QUẢN LÝ HỘI VIÊN
-        // ==========================================
         this.mainView.getBtnManageMembers().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -40,9 +38,7 @@ public class MainController {
             }
         });
 
-        // ==========================================
         // SỰ KIỆN: MỞ FORM BÁO CÁO DOANH THU
-        // ==========================================
         this.mainView.getBtnReport().addActionListener(e -> {
             try {
                 com.NetProject.view.frmReport reportView = new com.NetProject.view.frmReport();
@@ -54,9 +50,7 @@ public class MainController {
             }
         });
 
-        // ==========================================
-        // SỰ KIỆN: MỞ FORM QUẢN LÝ DỊCH VỤ (MENU F&B) - Đã được thêm vào đây!
-        // ==========================================
+        // SỰ KIỆN: MỞ FORM QUẢN LÝ DỊCH VỤ
         this.mainView.getBtnManageMenu().addActionListener(e -> {
             try {
                 com.NetProject.view.frmMenu menuView = new com.NetProject.view.frmMenu();
@@ -68,21 +62,19 @@ public class MainController {
             }
         });
 
-        // ==========================================
         // SỰ KIỆN: MỞ FORM QUẢN LÝ NHÂN VIÊN (CHỈ DÀNH CHO ADMIN)
-        // ==========================================
         this.mainView.getBtnManageEmployee().addActionListener(e -> {
 
             // 🛡️ LỚP KHIÊN BẢO VỆ: KIỂM TRA QUYỀN TRUY CẬP
             if (!loggedInUser.getRole().equalsIgnoreCase("Admin")) {
                 JOptionPane.showMessageDialog(null,
-                        "TRUY CẬP BỊ TỪ CHỐI!\nBạn đang đăng nhập bằng tài khoản Thu Ngân (Employee).\nChỉ có Quản lý (Admin) mới có quyền truy cập khu vực này.",
+                        "TRUY CẬP BỊ TỪ CHỐI!\nChỉ có Quản lý (Admin) mới có quyền truy cập khu vực này.",
                         "Cảnh Báo Quyền Hạn",
                         JOptionPane.WARNING_MESSAGE);
                 return; // Đá văng ra ngoài, không cho chạy code mở form bên dưới
             }
 
-            // Nếu vượt qua được lớp khiên trên (là Admin) thì mở form
+            // Nếu là Admin thì mở form
             try {
                 com.NetProject.view.frmEmployee empView = new com.NetProject.view.frmEmployee();
                 new com.NetProject.controller.EmployeeController(empView);
@@ -110,12 +102,10 @@ public class MainController {
                 }
 
                 if (clickedPc != null) {
-                    // ==========================================
                     // TRƯỜNG HỢP 1: MÁY TRỐNG (MÀU XANH) -> MỞ MÁY
-                    // ==========================================
                     if (clickedPc.getStatus().equalsIgnoreCase("Available")) {
 
-                        String[] openOptions = {"🚶 Khách Vãng Lai (Mở ngay)", "👑 Khách Hội Viên (Đăng nhập)", "Hủy"};
+                        String[] openOptions = {"Khách Vãng Lai", "Khách Hội Viên (Đăng nhập)", "Hủy"};
                         int openChoice = JOptionPane.showOptionDialog(
                                 null,
                                 "Chọn hình thức mở máy [" + clickedPc.getComputerName() + "]:",
@@ -128,7 +118,7 @@ public class MainController {
                         );
 
                         if (openChoice == 0) {
-                            // 1. Khách vãng lai: Thu ngân mở máy
+                            // 1. Khách vãng lai
                             boolean success = computerService.openComputer(computerId, loggedInUser.getAccountId());
                             if (success) {
                                 loadComputerMap();
@@ -137,7 +127,7 @@ public class MainController {
                             }
 
                         } else if (openChoice == 1) {
-                            // 2. Khách hội viên: Giả lập đăng nhập máy trạm
+                            // 2. Khách hội viên
                             JTextField txtUser = new JTextField();
                             JPasswordField txtPass = new JPasswordField();
                             Object[] loginForm = {
@@ -175,7 +165,7 @@ public class MainController {
                         // ==========================================
                     } else if (clickedPc.getStatus().equalsIgnoreCase("In Use")) {
 
-                        String[] options = {"🍔 Gọi Dịch Vụ (F&B)", "💰 Tính Tiền & Đóng Máy", "Hủy Bỏ"};
+                        String[] options = {"Gọi Dịch Vụ", "Tính Tiền & Đóng Máy", "Hủy Bỏ"};
                         int choice = JOptionPane.showOptionDialog(
                                 null,
                                 "Chọn thao tác cho máy [" + clickedPc.getComputerName() + "]:",
@@ -188,13 +178,13 @@ public class MainController {
                         );
 
                         if (choice == 0) {
-                            // CHỌN 1: KHÁCH GỌI ĐỒ ĂN (GHI NỢ)
+                            // CHỌN 1: KHÁCH GỌI ĐỒ ĂN
                             com.NetProject.view.frmOrder orderView = new com.NetProject.view.frmOrder();
                             new com.NetProject.controller.OrderController(orderView, loggedInUser, computerId);
                             orderView.setVisible(true);
 
                         } else if (choice == 1) {
-                            // CHỌN 2: TÍNH TIỀN (GỘP BILL) VÀ ĐÓNG MÁY
+                            // CHỌN 2: TÍNH TIỀN VÀ ĐÓNG MÁY
                             int confirm = JOptionPane.showConfirmDialog(
                                     null,
                                     "Xác nhận TÍNH TIỀN và ĐÓNG MÁY [" + clickedPc.getComputerName() + "]?",
@@ -205,7 +195,7 @@ public class MainController {
                             if (confirm == JOptionPane.YES_OPTION) {
 
                                 // --- BẮT ĐẦU: TRUY XUẤT TÊN THẬT NHÂN VIÊN ---
-                                String realName = loggedInUser.getUsername(); // Mặc định là Username
+                                String realName = loggedInUser.getUsername();
 
                                 try {
                                     com.NetProject.dao.EmployeeDAO empDAO = new com.NetProject.dao.EmployeeDAO();
@@ -218,7 +208,7 @@ public class MainController {
                                             // Dò xem nhân viên nào đang liên kết với Account đang đăng nhập
                                             if (emp.getAccount() != null && emp.getAccount().getAccountId().equals(loggedInUser.getAccountId())) {
                                                 realName = emp.getEmployeeName(); // Lôi tên thật ra!
-                                                break; // Tìm thấy rồi thì thoát vòng lặp cho nhẹ máy
+                                                break;
                                             }
                                         }
                                     }

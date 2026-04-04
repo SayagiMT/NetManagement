@@ -111,7 +111,7 @@ public class ComputerService {
             float totalFee = hoursPlayed * pricePerHour;
 
             // ==========================================
-            // PHẦN 2: TÍNH TIỀN DỊCH VỤ (F&B)
+            // PHẦN 2: TÍNH TIỀN DỊCH VỤ
             // ==========================================
             List<Invoice> unpaidInvoices = invoiceDAO.getUnpaidInvoicesByComputer(computerId);
             float totalServiceFee = 0;
@@ -145,7 +145,7 @@ public class ComputerService {
                     player.setBalance(newBalance);
                     accountDAO.update(player);
 
-                    return String.format("HÓA ĐƠN TỔNG HỢP (HỘI VIÊN)\n" +
+                    return String.format("HÓA ĐƠN (HỘI VIÊN)\n" +
                                     "Thu ngân: %s\n" +
                                     "Tài khoản: %s\n" +
                                     "Thời gian chơi: %.2f giờ\n" +
@@ -157,11 +157,23 @@ public class ComputerService {
                                     "Số dư còn lại: %,.0f VNĐ",
                             cashierName, player.getUsername(), hoursPlayed, totalFee, totalServiceFee, finalTotal, newBalance);
                 } else {
+                    // Hội viên thiếu tiền -> Lưu vết số tiền mặt thu thêm
                     float cashNeeded = Math.abs(newBalance);
+
+                    com.NetProject.entity.DepositTransaction cashReceipt = new com.NetProject.entity.DepositTransaction();
+                    cashReceipt.setTransactionId("CASH_" + System.currentTimeMillis());
+                    cashReceipt.setAmount(cashNeeded);
+                    cashReceipt.setDepositTime(java.time.LocalDateTime.now());
+                    cashReceipt.setAccount(player);
+
+                    // Ghi xuống DB
+                    new com.NetProject.dao.DepositTransactionDAO().create(cashReceipt);
+
+                    // Ép ví về 0đ
                     player.setBalance(0f);
                     accountDAO.update(player);
 
-                    return String.format("HÓA ĐƠN TỔNG HỢP (HỘI VIÊN)\n" +
+                    return String.format("HÓA ĐƠN\n" +
                                     "Thu ngân: %s\n" +
                                     "Tài khoản: %s\n" +
                                     "Thời gian chơi: %.2f giờ\n" +
@@ -170,17 +182,17 @@ public class ComputerService {
                                     "------------------\n" +
                                     "TỔNG CỘNG: %,.0f VNĐ\n" +
                                     "Số dư trong ví chỉ có: %,.0f VNĐ\n" +
-                                    "⚠️ CẦN THU THÊM TIỀN MẶT: %,.0f VNĐ",
+                                    "Thu thêm tiền mặt: %,.0f VNĐ",
                             cashierName, player.getUsername(), hoursPlayed, totalFee, totalServiceFee, finalTotal, currentBalance, cashNeeded);
                 }
             } else {
-                return String.format("HÓA ĐƠN TỔNG HỢP (KHÁCH VÃNG LAI)\n" +
+                return String.format("HÓA ĐƠN\n" +
                                 "Thu ngân: %s\n" +
                                 "Thời gian chơi: %.2f giờ\n" +
                                 "Tiền máy: %,.0f VNĐ\n" +
                                 "Tiền dịch vụ: %,.0f VNĐ\n" +
                                 "------------------\n" +
-                                "TỔNG CỘNG KHÁCH TRẢ (TIỀN MẶT): %,.0f VNĐ",
+                                "TỔNG CỘNG KHÁCH TRẢ TIỀN MẶT: %,.0f VNĐ",
                         cashierName, hoursPlayed, totalFee, totalServiceFee, finalTotal);
             }
 

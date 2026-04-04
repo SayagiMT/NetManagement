@@ -56,8 +56,6 @@ public class CustomerController {
                         view.getTxtUsername().setText(memberList.get(row).getUsername());
                         view.getTxtPassword().setText(memberList.get(row).getPassword());
                         view.getTxtBalance().setText(String.format("%,.0f", memberList.get(row).getBalance()));
-
-                        view.getTxtUsername().setEditable(false); // Không cho sửa Username
                     }
                 }
             }
@@ -138,9 +136,7 @@ public class CustomerController {
             }
         });
 
-        // ==========================================
-        // 6. Nút Nạp Tiền (Top-up) - BỔ SUNG Ở ĐÂY
-        // ==========================================
+        // 6. Nút Nạp Tiền
         view.getBtnTopUp().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

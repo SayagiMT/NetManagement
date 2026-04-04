@@ -14,10 +14,10 @@ public class frmLogin extends JFrame {
         setTitle("Đăng Nhập Hệ Thống Quản Lý Tiệm Net");
         setSize(400, 240);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Hiển thị ngay giữa màn hình
-        setResizable(false);         // Khóa kích thước, không cho phóng to
+        setLocationRelativeTo(null);
+        setResizable(false);
 
-        // 2. Khởi tạo mainPanel và set layout thành null để tự do đặt tọa độ
+        // 2. Khởi tạo mainPanel
         mainPanel = new JPanel();
         mainPanel.setLayout(null);
         mainPanel.setBackground(new Color(245, 245, 245));
@@ -30,7 +30,7 @@ public class frmLogin extends JFrame {
         lblTitle.setBounds(0, 15, 400, 30);
         mainPanel.add(lblTitle);
 
-        // 4. Khởi tạo các nhãn (Label) và ô nhập liệu (TextField)
+        // 4. Khởi tạo các nhãn và ô nhập liệu
         JLabel lblUser = new JLabel("Tài khoản:");
         lblUser.setFont(new Font("Arial", Font.BOLD, 13));
         lblUser.setBounds(50, 70, 80, 25);
@@ -52,10 +52,10 @@ public class frmLogin extends JFrame {
         // 5. Khởi tạo nút Đăng Nhập
         btnLogin = new JButton("Đăng Nhập");
         btnLogin.setBounds(140, 150, 120, 35);
-        btnLogin.setBackground(new Color(41, 128, 185)); // Màu xanh lam
-        btnLogin.setForeground(Color.WHITE);            // Chữ màu trắng
+        btnLogin.setBackground(new Color(41, 128, 185));
+        btnLogin.setForeground(Color.WHITE);
         btnLogin.setFont(new Font("Arial", Font.BOLD, 14));
-        btnLogin.setFocusPainted(false);                // Bỏ viền gạch ngang khi click
+        btnLogin.setFocusPainted(false);
         btnLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));
         mainPanel.add(btnLogin);
     }

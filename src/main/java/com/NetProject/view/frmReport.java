@@ -15,21 +15,31 @@ public class frmReport extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
-        // Header
+        // 1. Tiêu đề
         JPanel pnlHeader = new JPanel();
         pnlHeader.add(new JLabel("<html><h2 style='color:#2c3e50'>THỐNG KÊ DOANH THU THEO NGÀY</h2></html>"));
         add(pnlHeader, BorderLayout.NORTH);
 
-        // Bảng
-        String[] cols = {"Ngày", "Tiền nạp Hội viên", "Tiền Khách vãng lai", "TỔNG THU TIỀN MẶT"};
-        model = new DefaultTableModel(cols, 0);
-        tblRevenue = new JTable(model);
-        tblRevenue.setRowHeight(20);
-        tblRevenue.setFont(new Font("Arial", Font.PLAIN, 14));
-        add(new JScrollPane(tblRevenue), BorderLayout.CENTER);
+        // 2. KHU VỰC QUAN TRỌNG: KHỞI TẠO BẢNG VÀ KHÓA CHỈNH SỬA
+        String[] cols = {"Ngày", "Tiền nạp Hội viên", "Tiền mặt", "TỔNG DOANH THU NGÀY"};
 
-        // Footer hiển thị tổng tất cả các ngày
-        lblTotalRevenue = new JLabel("TỔNG DOANH THU: 0 VNĐ", SwingConstants.RIGHT);
+        model = new DefaultTableModel(cols, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Khóa chết không cho gõ vào bảng
+            }
+        };
+
+        tblRevenue = new JTable(model);
+        tblRevenue.setRowHeight(25);
+        tblRevenue.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        // 3. PHẢI CÓ DÒNG NÀY THÌ BẢNG MỚI HIỆN LÊN
+        JScrollPane scrollPane = new JScrollPane(tblRevenue);
+        add(scrollPane, BorderLayout.CENTER); // Dán bảng vào giữa màn hình
+
+        // 4. Footer hiển thị tổng tiền
+        lblTotalRevenue = new JLabel("TỔNG DOANH THU HỆ THỐNG: 0 VNĐ", SwingConstants.RIGHT);
         lblTotalRevenue.setFont(new Font("Arial", Font.BOLD, 18));
         lblTotalRevenue.setForeground(new Color(192, 57, 43));
         lblTotalRevenue.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

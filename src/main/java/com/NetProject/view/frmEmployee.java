@@ -12,7 +12,7 @@ public class frmEmployee extends JFrame {
     private DefaultTableModel model;
 
     public frmEmployee() {
-        setTitle("Quản Lý Nhân Sự (Dành riêng cho Admin)");
+        setTitle("Quản Lý Nhân Sự");
         setSize(750, 500);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
@@ -25,7 +25,7 @@ public class frmEmployee extends JFrame {
         txtId = new JTextField(); txtId.setEditable(false);
         pnlInput.add(txtId);
 
-        pnlInput.add(new JLabel("Tên thật (In Bill):"));
+        pnlInput.add(new JLabel("Họ tên:"));
         txtRealName = new JTextField();
         pnlInput.add(txtRealName);
 
@@ -52,7 +52,7 @@ public class frmEmployee extends JFrame {
         // 3. Panel Nút bấm
         JPanel pnlBtns = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         btnAdd = new JButton("Thêm Nhân Viên");
-        btnDelete = new JButton("Sa thải (Xóa)");
+        btnDelete = new JButton("Sa thải");
         btnClear = new JButton("Làm mới");
 
         pnlBtns.add(btnAdd); pnlBtns.add(btnDelete); pnlBtns.add(btnClear);

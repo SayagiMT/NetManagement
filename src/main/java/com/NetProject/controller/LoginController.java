@@ -3,8 +3,6 @@ package com.NetProject.controller;
 import com.NetProject.dto.AccountDTO;
 import com.NetProject.service.AccountService;
 import com.NetProject.view.frmLogin;
-import com.NetProject.view.frmMain;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,7 +10,6 @@ public class LoginController {
     private frmLogin view;
     private AccountService service;
 
-    // Đã nhận đủ 2 tham số: View và Service từ MainApp truyền sang
     public LoginController(frmLogin view, AccountService service) {
         this.view = view;
         this.service = service;
@@ -34,7 +31,7 @@ public class LoginController {
         AccountDTO account = service.login(user, pass);
 
         if (account != null) {
-            // Kiểm tra phân quyền: Chặn Member đăng nhập vào phần mềm của Thu ngân
+            // Kiểm tra phân quyền: Chặn Member đăng nhập vào phần mềm quản lí
             if (account.getRole().equalsIgnoreCase("Member")) {
                 view.showMessage("Truy cập bị từ chối!\nTài khoản Hội viên không được phép dùng phần mềm Quản lý.");
                 return; // Dừng lại ngay lập tức, không cho đi tiếp
