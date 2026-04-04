@@ -7,13 +7,16 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class FrmMain extends JFrame {
+public class frmMain extends JFrame {
     private JLabel lblWelcome;
     private JPanel pnlComputerMap;
     private JButton btnManageMembers;
+    private JButton btnReport;
+    private JButton btnManageMenu;
+    private JButton btnManageEmployee;
 
 
-    public FrmMain() {
+    public frmMain() {
         setTitle("Phần Mềm Quản Lý Tiệm Net - Sơ Đồ Phòng Máy");
         setSize(1000, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,15 +34,24 @@ public class FrmMain extends JFrame {
         pnlHeader.add(lblWelcome);
 
         // --- NÚT QUẢN LÝ HỘI VIÊN ---
-        pnlHeader.add(Box.createHorizontalStrut(50)); // Tạo khoảng cách
-
-        btnManageMembers = new JButton("QUẢN LÝ HỘI VIÊN");
-        btnManageMembers.setBackground(new Color(52, 152, 219)); // Màu xanh dương đậm chất quản lý
-        btnManageMembers.setForeground(Color.WHITE);
-        btnManageMembers.setFont(new Font("Arial", Font.BOLD, 14));
-        btnManageMembers.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
+        pnlHeader.add(Box.createHorizontalStrut(50));
+        btnManageMembers = new JButton("Quản Lý Hội Viên");
         pnlHeader.add(btnManageMembers);
+
+        // --- NÚT BÁO CÁO DOANH THU ---
+        pnlHeader.add(Box.createHorizontalStrut(10));
+        btnReport = new JButton("Báo Cáo Doanh Thu");
+        pnlHeader.add(btnReport);
+
+        // --- NÚT QUẢN LÝ DỊCH VỤ ---
+        pnlHeader.add(Box.createHorizontalStrut(10));
+        btnManageMenu = new JButton("Quản Lý Dịch Vụ");
+        pnlHeader.add(btnManageMenu);
+
+        // --- NÚT QUẢN LÝ NHÂN SỰ ---
+        pnlHeader.add(Box.createHorizontalStrut(10));
+        btnManageEmployee = new JButton("Quản Lý Nhân Sự");
+        pnlHeader.add(btnManageEmployee);
         // ----------------------------
 
         add(pnlHeader, BorderLayout.NORTH);
@@ -111,4 +123,15 @@ public class FrmMain extends JFrame {
         return btnManageMembers;
     }
 
+    public JButton getBtnReport() {
+        return btnReport;
+    }
+
+    public JButton getBtnManageMenu(){
+        return btnManageMenu;
+    }
+
+    public JButton getBtnManageEmployee() {
+        return btnManageEmployee;
+    }
 }

@@ -4,9 +4,8 @@ import com.NetProject.dto.AccountDTO;
 import com.NetProject.dto.ComputerDTO;
 import com.NetProject.service.AccountService;
 import com.NetProject.service.ComputerService;
-import com.NetProject.view.FrmCustomer;
-import com.NetProject.view.FrmMain;
-import com.NetProject.view.FrmOrder;
+import com.NetProject.view.frmCustomer;
+import com.NetProject.view.frmMain;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,11 +13,11 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class MainController {
-    private FrmMain mainView;
+    private frmMain mainView;
     private ComputerService computerService;
     private AccountDTO loggedInUser;
 
-    public MainController(FrmMain view, AccountDTO user) {
+    public MainController(frmMain view, AccountDTO user) {
         this.mainView = view;
         this.loggedInUser = user;
         this.computerService = new ComputerService();
@@ -35,12 +34,61 @@ public class MainController {
         this.mainView.getBtnManageMembers().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FrmCustomer memberView = new FrmCustomer();
-
-                // TRUYỀN loggedInUser SANG CHO MemberController
+                frmCustomer memberView = new frmCustomer();
                 new CustomerController(memberView, loggedInUser);
-
                 memberView.setVisible(true);
+            }
+        });
+
+        // ==========================================
+        // SỰ KIỆN: MỞ FORM BÁO CÁO DOANH THU
+        // ==========================================
+        this.mainView.getBtnReport().addActionListener(e -> {
+            try {
+                com.NetProject.view.frmReport reportView = new com.NetProject.view.frmReport();
+                new com.NetProject.controller.ReportController(reportView);
+                reportView.setVisible(true);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Lỗi khi mở form Báo Cáo: " + ex.toString(), "Lỗi Hệ Thống", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        // ==========================================
+        // SỰ KIỆN: MỞ FORM QUẢN LÝ DỊCH VỤ (MENU F&B) - Đã được thêm vào đây!
+        // ==========================================
+        this.mainView.getBtnManageMenu().addActionListener(e -> {
+            try {
+                com.NetProject.view.frmMenu menuView = new com.NetProject.view.frmMenu();
+                new com.NetProject.controller.MenuController(menuView);
+                menuView.setVisible(true);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Lỗi khi mở form Dịch vụ: " + ex.toString(), "Lỗi Hệ Thống", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        // ==========================================
+        // SỰ KIỆN: MỞ FORM QUẢN LÝ NHÂN VIÊN (CHỈ DÀNH CHO ADMIN)
+        // ==========================================
+        this.mainView.getBtnManageEmployee().addActionListener(e -> {
+
+            // 🛡️ LỚP KHIÊN BẢO VỆ: KIỂM TRA QUYỀN TRUY CẬP
+            if (!loggedInUser.getRole().equalsIgnoreCase("Admin")) {
+                JOptionPane.showMessageDialog(null,
+                        "TRUY CẬP BỊ TỪ CHỐI!\nBạn đang đăng nhập bằng tài khoản Thu Ngân (Employee).\nChỉ có Quản lý (Admin) mới có quyền truy cập khu vực này.",
+                        "Cảnh Báo Quyền Hạn",
+                        JOptionPane.WARNING_MESSAGE);
+                return; // Đá văng ra ngoài, không cho chạy code mở form bên dưới
+            }
+
+            // Nếu vượt qua được lớp khiên trên (là Admin) thì mở form
+            try {
+                com.NetProject.view.frmEmployee empView = new com.NetProject.view.frmEmployee();
+                new com.NetProject.controller.EmployeeController(empView);
+                empView.setVisible(true);
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         });
     }
@@ -141,7 +189,7 @@ public class MainController {
 
                         if (choice == 0) {
                             // CHỌN 1: KHÁCH GỌI ĐỒ ĂN (GHI NỢ)
-                            FrmOrder orderView = new FrmOrder();
+                            com.NetProject.view.frmOrder orderView = new com.NetProject.view.frmOrder();
                             new com.NetProject.controller.OrderController(orderView, loggedInUser, computerId);
                             orderView.setVisible(true);
 
