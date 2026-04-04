@@ -3,7 +3,7 @@ package com.NetProject.controller;
 import com.NetProject.dto.AccountDTO;
 import com.NetProject.dto.CustomerDTO;
 import com.NetProject.service.CustomerService;
-import com.NetProject.view.FrmCustomer;
+import com.NetProject.view.frmCustomer;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -14,13 +14,13 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class CustomerController {
-    private FrmCustomer view;
+    private frmCustomer view;
     private CustomerService service;
     private List<CustomerDTO> memberList;
     private AccountDTO loggedInUser;
 
     // FIX LỖI: Đã thêm tham số AccountDTO user vào đây
-    public CustomerController(FrmCustomer view, AccountDTO user) {
+    public CustomerController(frmCustomer view, AccountDTO user) {
         this.view = view;
         this.loggedInUser = user; // Lưu lại người đang đăng nhập
         this.service = new CustomerService();

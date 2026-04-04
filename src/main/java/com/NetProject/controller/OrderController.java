@@ -4,7 +4,7 @@ import com.NetProject.dto.AccountDTO;
 import com.NetProject.dto.CartItemDTO;
 import com.NetProject.dto.MenuItemDTO;
 import com.NetProject.service.OrderService;
-import com.NetProject.view.FrmOrder;
+import com.NetProject.view.frmOrder;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderController {
-    private FrmOrder view;
+    private frmOrder view;
     private OrderService service;
     private AccountDTO loggedInUser;
 
@@ -25,7 +25,7 @@ public class OrderController {
     private List<CartItemDTO> cartList;
 
     // CONSTRUCTOR MỚI: Nhận đủ 3 tham số (view, user, computerId)
-    public OrderController(FrmOrder view, AccountDTO user, String computerId) {
+    public OrderController(frmOrder view, AccountDTO user, String computerId) {
         this.view = view;
         this.loggedInUser = user;
         this.computerId = computerId; // Nhận và lưu mã máy từ MainController truyền sang

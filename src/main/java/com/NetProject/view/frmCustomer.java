@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class FrmCustomer extends JFrame {
+public class frmCustomer extends JFrame {
     private JTextField txtAccountId;
     private JTextField txtUsername;
     private JPasswordField txtPassword;
@@ -16,7 +16,7 @@ public class FrmCustomer extends JFrame {
     private JTable tblMembers;
     private DefaultTableModel tableModel;
 
-    public FrmCustomer() {
+    public frmCustomer() {
         setTitle("Quản Lý Hội Viên");
         setSize(750, 500); // Tăng chiều ngang một chút để đủ chỗ chứa 5 nút
         setLocationRelativeTo(null);

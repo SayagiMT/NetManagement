@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class FrmOrder extends JFrame {
+public class frmOrder extends JFrame {
     // Các thành phần giao diện
     private JTable tblMenu;
     private DefaultTableModel menuModel;
@@ -17,7 +17,7 @@ public class FrmOrder extends JFrame {
     private JButton btnCheckout;
     private JLabel lblTotalAmount;
 
-    public FrmOrder() {
+    public frmOrder() {
         setTitle("Dịch Vụ Ăn Uống - Bán Hàng (POS)");
         setSize(900, 600);
         setLocationRelativeTo(null); // Giữa màn hình
