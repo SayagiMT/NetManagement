@@ -3,6 +3,7 @@ package com.NetProject.controller;
 import com.NetProject.dto.AccountDTO;
 import com.NetProject.dto.CustomerDTO;
 import com.NetProject.service.CustomerService;
+import com.NetProject.service.CustomerServiceImp;
 import com.NetProject.view.frmCustomer;
 
 import javax.swing.*;
@@ -19,16 +20,17 @@ public class CustomerController {
     private List<CustomerDTO> memberList;
     private AccountDTO loggedInUser;
 
-
+    // Constructor
     public CustomerController(frmCustomer view, AccountDTO user) {
         this.view = view;
         this.loggedInUser = user; // Lưu lại người đang đăng nhập
-        this.service = new CustomerService();
+        this.service = new CustomerServiceImp();
 
         loadData();
         initEvents();
     }
 
+    // Hàm tải dữ liệu lên bảng
     private void loadData() {
         memberList = service.getAllMembers();
         DefaultTableModel model = view.getTableModel();
@@ -43,7 +45,7 @@ public class CustomerController {
             });
         }
     }
-
+    // Hàm gắn sự kiện (Click, Thêm, Sửa, Xóa...)
     private void initEvents() {
         // 1. CLick vào bảng hiện dữ liệu lên form
         view.getTblMembers().getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -61,7 +63,7 @@ public class CustomerController {
             }
         });
 
-        // 2. Nút Làm Mới (Clear)
+        // 2. Nút Làm Mới (Clear): Xóa các ô nhập để nhập thông tin khác
         view.getBtnClear().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,7 +76,7 @@ public class CustomerController {
             }
         });
 
-        // 3. Nút Thêm Mới
+        // 3. Nút Thêm Mới (Create): Kiểm tra xem Password và Username có trống không, sau đó lưu vào Database qua Services
         view.getBtnAdd().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -124,7 +126,7 @@ public class CustomerController {
             }
         });
 
-        // 5. Nút Xóa
+        // 5. Nút Xóa : Sử dụng ID để xóa trong Database
         view.getBtnDelete().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -144,7 +146,7 @@ public class CustomerController {
             }
         });
 
-        // 6. Nút Nạp Tiền
+        // 6. Nút Nạp Tiền: Bật khung thông báo hỏi nạp bao nhiêu tiền, sau đó gọi Service để cộng tiền vào tài khoản Hội viên, đồng thời lưu lại bằng chứng thu ngân nào đã nạp.
         view.getBtnTopUp().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

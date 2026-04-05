@@ -4,12 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05e7b50d-05ba-4ab8-aa1c-5d88f68b3790" name="Changes" comment="Logic tính tiền">
+    <list default="true" id="05e7b50d-05ba-4ab8-aa1c-5d88f68b3790" name="Changes" comment="Thêm dữ liệu db">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/service/AccountServiceImp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/service/ComputerServiceImp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/service/CustomerServiceImp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/service/EmployeeServiceImp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/MenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/MainApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/EmployeeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/ReportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/controller/ReportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/service/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/service/ComputerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/service/ComputerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/service/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/service/CustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/service/EmployeeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/service/EmployeeService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/service/MenuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/service/MenuService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmEmployee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmEmployee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/view/frmMain.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +33,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -83,6 +97,9 @@
       <recent name="C:\Users\vandu\SPKT\LapTrinhWindow\NetManagement\src\main\java\com\NetProject\util" />
       <recent name="C:\Users\vandu\SPKT\LapTrinhWindow\NetManagement\src\main\java\com\NetProject\dao" />
       <recent name="C:\Users\vandu\SPKT\LapTrinhWindow\NetManagement\src\main\resources" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="com.NetProject.service" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.NetProject.entity" />
@@ -200,15 +217,7 @@
       <option name="project" value="LOCAL" />
       <updated>1775311857423</updated>
     </task>
-    <task id="LOCAL-00014" summary="Logic tính tiền">
-      <option name="closed" value="true" />
-      <created>1775372852189</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1775372852190</updated>
-    </task>
-    <option name="localTasksCounter" value="15" />
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -225,8 +234,7 @@
     <MESSAGE value="Thêm đăng xuất" />
     <MESSAGE value="Nhân nguyên như cc" />
     <MESSAGE value="Thêm dữ liệu db" />
-    <MESSAGE value="Logic tính tiền" />
-    <option name="LAST_COMMIT_MESSAGE" value="Logic tính tiền" />
+    <option name="LAST_COMMIT_MESSAGE" value="Thêm dữ liệu db" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

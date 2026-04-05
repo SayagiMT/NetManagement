@@ -4,6 +4,7 @@ import com.NetProject.dto.AccountDTO;
 import com.NetProject.dto.CartItemDTO;
 import com.NetProject.dto.MenuItemDTO;
 import com.NetProject.service.OrderService;
+import com.NetProject.service.OrderServiceImp;
 import com.NetProject.view.frmOrder;
 
 import javax.swing.*;
@@ -25,7 +26,7 @@ public class OrderController {
         this.view = view;
         this.loggedInUser = user;
         this.computerId = computerId;
-        this.service = new OrderService();
+        this.service = new OrderServiceImp();
         this.cartList = new ArrayList<>();
 
         loadMenu();
@@ -134,7 +135,7 @@ public class OrderController {
             }
         });
     }
-
+    // Hàm xử lí Logic Thêm vào giỏ
     private void addToCart(MenuItemDTO item, int quantity) {
         boolean exists = false;
         for (CartItemDTO cartItem : cartList) {
@@ -151,7 +152,7 @@ public class OrderController {
 
         updateCartView();
     }
-
+    // Hàm vẽ lại giỏ hàng: Hệ thống sẽ xóa giỏ hàng cũ và cập nhật lại giỏ hàng mới
     private void updateCartView() {
         DefaultTableModel model = view.getCartModel();
         model.setRowCount(0);

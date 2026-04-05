@@ -2,6 +2,7 @@ package com.NetProject;
 
 import com.NetProject.controller.LoginController;
 import com.NetProject.service.AccountService;
+import com.NetProject.service.AccountServiceImp;
 import com.NetProject.view.frmLogin;
 
 import javax.swing.*;
@@ -25,7 +26,7 @@ public class    MainApp {
                 frmLogin loginView = new frmLogin();
 
                 // Khởi tạo Service xử lý dữ liệu
-                AccountService accountService = new AccountService();
+                AccountService accountService = new AccountServiceImp();
 
                 // Khởi tạo bộ xử lý sự kiện
                 new LoginController(loginView, accountService);

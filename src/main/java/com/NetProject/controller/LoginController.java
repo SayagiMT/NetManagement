@@ -22,7 +22,7 @@ public class LoginController {
             }
         });
     }
-
+    // Hàm xử lí thông tin Login
     private void handleLogin() {
         String user = view.getUsername();
         String pass = view.getPassword();

@@ -2,6 +2,7 @@ package com.NetProject.controller;
 
 import com.NetProject.entity.Employee;
 import com.NetProject.service.EmployeeService;
+import com.NetProject.service.EmployeeServiceImp;
 import com.NetProject.view.frmEmployee;
 
 import javax.swing.*;
@@ -12,13 +13,14 @@ public class EmployeeController {
     private final EmployeeService service;
     private List<Employee> list;
 
+    //Constructor
     public EmployeeController(frmEmployee view) {
         this.view = view;
-        this.service = new EmployeeService();
+        this.service = new EmployeeServiceImp();
         loadData();
         initEvents();
     }
-
+    // Hàm tải dữ liệu lên bảng
     private void loadData() {
         list = service.getAllEmployees();
         view.getModel().setRowCount(0);
@@ -36,6 +38,7 @@ public class EmployeeController {
         }
     }
 
+    // Hàm gắn sự kiện
     private void initEvents() {
         // Đổ dữ liệu lên textfield khi bấm vào bảng
         view.getTblEmployee().getSelectionModel().addListSelectionListener(e -> {

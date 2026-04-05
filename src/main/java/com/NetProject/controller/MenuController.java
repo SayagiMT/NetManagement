@@ -2,6 +2,7 @@ package com.NetProject.controller;
 
 import com.NetProject.entity.ServiceItem;
 import com.NetProject.service.MenuService;
+import com.NetProject.service.MenuServiceImp;
 import com.NetProject.view.frmMenu;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ public class MenuController {
 
     public MenuController(frmMenu view) {
         this.view = view;
-        this.service = new MenuService();
+        this.service = new MenuServiceImp();
         loadData();
         initEvents();
     }

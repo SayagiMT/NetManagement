@@ -3,7 +3,9 @@ package com.NetProject.controller;
 import com.NetProject.dto.AccountDTO;
 import com.NetProject.dto.ComputerDTO;
 import com.NetProject.service.AccountService;
+import com.NetProject.service.AccountServiceImp;
 import com.NetProject.service.ComputerService;
+import com.NetProject.service.ComputerServiceImp;
 import com.NetProject.view.frmCustomer;
 import com.NetProject.view.frmMain;
 
@@ -20,7 +22,7 @@ public class MainController {
     public MainController(frmMain view, AccountDTO user) {
         this.mainView = view;
         this.loggedInUser = user;
-        this.computerService = new ComputerService();
+        this.computerService = new ComputerServiceImp();
 
 
 
@@ -100,7 +102,7 @@ public class MainController {
                 mainView.dispose(); // Tắt Main form hiện tại
 
                 com.NetProject.view.frmLogin loginView = new com.NetProject.view.frmLogin();
-                com.NetProject.service.AccountService accountService = new com.NetProject.service.AccountService();
+                com.NetProject.service.AccountService accountService = new AccountServiceImp();
                 new com.NetProject.controller.LoginController(loginView, accountService);
 
                 loginView.setLocationRelativeTo(null);
@@ -167,7 +169,7 @@ public class MainController {
                                 String mUser = txtUser.getText();
                                 String mPass = new String(txtPass.getPassword());
 
-                                AccountService accService = new AccountService();
+                                AccountService accService = new AccountServiceImp();
                                 AccountDTO memberAcc = accService.login(mUser, mPass);
 
                                 if (memberAcc != null && memberAcc.getRole().equalsIgnoreCase("Member")) {
