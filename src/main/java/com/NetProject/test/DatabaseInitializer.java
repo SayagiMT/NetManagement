@@ -9,14 +9,13 @@ import org.hibernate.Transaction;
 public class DatabaseInitializer {
 
     public static void main(String[] args) {
-        System.out.println("Đang kết nối Database và dọn dẹp dữ liệu cũ...");
+        System.out.println("Connecting to database and clearing cache...");
         clearOldData();
 
-        System.out.println("Đang khởi tạo dữ liệu Master mới...");
+        System.out.println("Creating new Master data...");
         seedData();
 
-        System.out.println("✅ HOÀN TẤT! Dữ liệu đã được nạp thành công.");
-        System.out.println("Bây giờ bạn có thể chạy file MainApp.java để sử dụng phần mềm.");
+        System.out.println("Successfully Created new Master data...");
 
         // Tắt Hibernate để dừng chương trình
         HibernateUtil.shutdown();
@@ -46,7 +45,7 @@ public class DatabaseInitializer {
         } catch (Exception e) {
             if (tr != null) tr.rollback();
             e.printStackTrace();
-            System.err.println("Lỗi khi xóa dữ liệu cũ!");
+            System.err.println("Error while trying to clear old data.");
         }
     }
 

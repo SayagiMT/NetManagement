@@ -18,7 +18,7 @@ public class    MainApp {
 
 
         // 2. KHỞI CHẠY PHẦN MỀM
-        // Bắt buộc phải chạy trong EventQueue để giao diện mượt mà và không bị kẹt luồng
+        //Chạy trong EventQueue để giao diện mượt mà và không bị kẹt
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 // Khởi tạo màn hình giao diện (View)

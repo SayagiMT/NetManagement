@@ -22,8 +22,8 @@ public class MainController {
         this.loggedInUser = user;
         this.computerService = new ComputerService();
 
-        // Hiển thị lời chào
-        mainView.setWelcomeText("Xin chào [" + user.getRole() + "] : " + user.getUsername());
+
+
 
         // Vẽ sơ đồ phòng máy
         loadComputerMap();
