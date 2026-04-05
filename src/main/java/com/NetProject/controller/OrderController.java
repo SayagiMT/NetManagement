@@ -33,7 +33,9 @@ public class OrderController {
     }
 
     private void loadMenu() {
+        // Chỉ cần gọi hàm này, Service sẽ tự biết trả về danh sách các món CÒN BÁN
         menuList = service.getAllMenuItems();
+
         DefaultTableModel model = view.getMenuModel();
         model.setRowCount(0); // Xóa dữ liệu cũ
 

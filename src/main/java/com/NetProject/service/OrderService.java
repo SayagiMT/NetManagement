@@ -33,20 +33,24 @@ public class OrderService {
      * Lấy danh sách tất cả các món ăn/thức uống đang có trong kho để hiển thị lên Menu
      */
     public List<MenuItemDTO> getAllMenuItems() {
-        List<ServiceItem> items = serviceItemDAO.findAll();
-        List<MenuItemDTO> listDTOs = new ArrayList<>();
+        // serviceItemDAO là đối tượng DAO của bạn
+        List<ServiceItem> entityList = serviceItemDAO.findAll();
+        List<MenuItemDTO> dtoList = new ArrayList<>();
 
-        if (items != null) {
-            for (ServiceItem item : items) {
-                listDTOs.add(new MenuItemDTO(
-                        item.getServiceId(),
-                        item.getServiceName(),
-                        item.getPrice(),
-                        item.getStockQuantity()
-                ));
+        if (entityList != null) {
+            for (ServiceItem entity : entityList) {
+                if (entity.getServiceType() == null || !entity.getServiceType().equalsIgnoreCase("Ngừng bán")) {
+                    MenuItemDTO dto = new MenuItemDTO(
+                            entity.getServiceId(),
+                            entity.getServiceName(),
+                            entity.getPrice(),
+                            entity.getStockQuantity()
+                    );
+                    dtoList.add(dto);
+                }
             }
         }
-        return listDTOs;
+        return dtoList;
     }
 
     /**

@@ -45,27 +45,30 @@ public class MenuController {
             }
         });
 
-        // 2. Xử lý nút Thêm mới
         view.getBtnAdd().addActionListener(e -> {
             try {
+                // Chỉ cần kiểm tra Tên món
                 String name = view.getTxtName().getText().trim();
                 if (name.isEmpty()) {
-                    JOptionPane.showMessageDialog(view, "Vui lòng nhập tên món!");
+                    JOptionPane.showMessageDialog(view, "Vui lòng nhập Tên món!");
                     return;
                 }
-                float price = Float.parseFloat(view.getTxtPrice().getText());
-                int stock = Integer.parseInt(view.getTxtStock().getText());
 
+                float price = Float.parseFloat(view.getTxtPrice().getText().trim());
+                int stock = Integer.parseInt(view.getTxtStock().getText().trim());
+
+                // Gọi hàm lưu vào DB (Chỉ truyền 3 tham số, hệ thống sẽ tự lo phần Mã)
                 if (service.addMenu(name, price, stock)) {
                     JOptionPane.showMessageDialog(view, "Thêm thành công!");
-                    loadData();
-                    view.getBtnClear().doClick();
+                    loadData(); // Load lại bảng
+                    view.getBtnClear().doClick(); // Xóa sạch các ô nhập liệu
+                } else {
+                    JOptionPane.showMessageDialog(view, "Thêm thất bại do lỗi hệ thống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(view, "Giá và Tồn kho phải là số!");
+                JOptionPane.showMessageDialog(view, "Lỗi: Giá tiền và Tồn kho phải là số!", "Sai định dạng", JOptionPane.WARNING_MESSAGE);
             }
         });
-
         // 3. Xử lý nút Cập nhật
         view.getBtnUpdate().addActionListener(e -> {
             try {

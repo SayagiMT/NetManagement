@@ -22,7 +22,7 @@ public class frmEmployee extends JFrame {
         pnlInput.setBorder(BorderFactory.createTitledBorder("Thông tin Tài khoản & Nhân sự"));
 
         pnlInput.add(new JLabel("Mã NV:"));
-        txtId = new JTextField(); txtId.setEditable(false);
+        txtId = new JTextField();
         pnlInput.add(txtId);
 
         pnlInput.add(new JLabel("Họ tên:"));
