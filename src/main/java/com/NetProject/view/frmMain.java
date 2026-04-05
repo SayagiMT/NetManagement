@@ -85,10 +85,10 @@ public class frmMain extends JFrame {
         btnToggleMenu.setIconTextGap(10);
 
         // Khởi tạo các nút chức năng (Bật tính năng Đóng Khung = true)
-        btnManageMembers = createSidebarButton(" Hội Viên", new Color(40, 40, 40), true);
-        btnManageMenu = createSidebarButton(" Dịch Vụ (F&B)", new Color(40, 40, 40), true);
-        btnManageEmployee = createSidebarButton(" Nhân Sự", new Color(40, 40, 40), true);
-        btnReport = createSidebarButton(" Doanh Thu", new Color(40, 40, 40), true);
+        btnManageMembers = createSidebarButton("Quản Lí Hội Viên", new Color(40, 40, 40), true);
+        btnManageMenu = createSidebarButton("Quản Lí Dịch Vụ", new Color(40, 40, 40), true);
+        btnManageEmployee = createSidebarButton("Quản Lí Nhân Sự", new Color(40, 40, 40), true);
+        btnReport = createSidebarButton("Thống Kê Doanh Thu", new Color(40, 40, 40), true);
 
         btnLogout = createSidebarButton(" Đăng Xuất", new Color(40, 40, 40), true);
         btnLogout.setForeground(new Color(255, 100, 100)); // Đỏ sáng hơn chút cho dễ nhìn trên nền tối

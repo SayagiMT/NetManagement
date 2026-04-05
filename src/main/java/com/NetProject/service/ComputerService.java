@@ -92,21 +92,25 @@ public class ComputerService {
             SessionLog log = sessionLogDAO.getActiveSessionByComputer(computerId);
             if (log == null) return "Lỗi: Không tìm thấy phiên chơi!";
 
-            // PHẦN 1: TÍNH TIỀN GIỜ CHƠI
+            // PHẦN 1: TÍNH TIỀN THEO PHIÊN
             LocalDateTime now = LocalDateTime.now();
             log.setEndTime(now);
 
-            // Dùng java.time.Duration để lấy khoảng cách giữa 2 mốc thời gian (tính bằng Phút)
-            long minutesPlayed = java.time.Duration.between(log.getStartTime(), now).toMinutes();
+            long secondsPlayed = java.time.Duration.between(log.getStartTime(), now).getSeconds();
 
-            // Nếu khách vừa ngồi vào chưa được 1 phút (ví dụ lỡ tay bật) -> tính tối thiểu 1 phút
-            if (minutesPlayed < 1) minutesPlayed = 1;
+            int blockMinutes = 30;
+            double blockSeconds = blockMinutes * 60.0;
 
-            // Đổi số phút ra số Giờ (chia 60.0f để ra số thập phân)
-            float hoursPlayed = (float) minutesPlayed / 60.0f;
+            long blocksPlayed = (long) Math.ceil(secondsPlayed / blockSeconds);
+            if (blocksPlayed < 1) blocksPlayed = 1;
 
             float pricePerHour = pc.getZone().getHourlyRate();
-            float totalFee = hoursPlayed * pricePerHour;
+            float pricePerBlock = pricePerHour * (blockMinutes / 60.0f);
+
+            float totalFee = blocksPlayed * pricePerBlock;
+
+            long displayMinutes = (long) Math.ceil(secondsPlayed / 60.0);
+            if (displayMinutes < 1) displayMinutes = 1;
 
             // PHẦN 2: TÍNH TIỀN DỊCH VỤ
             List<Invoice> unpaidInvoices = invoiceDAO.getUnpaidInvoicesByComputer(computerId);
@@ -118,76 +122,96 @@ public class ComputerService {
                 invoiceDAO.update(inv);
             }
 
-            // PHẦN 3: GỘP BILL VÀ GIẢI PHÓNG MÁY
-            float finalTotal = totalFee + totalServiceFee;
-            log.setDeductedAmount(finalTotal);
-            sessionLogDAO.update(log);
 
-            pc.setStatus("Available");
-            computerDAO.update(pc);
+            // PHẦN 3 & 4: XỬ LÝ THANH TOÁN
+            // Tính tổng chi phí gốc
+            float exactTotal = Math.round(totalFee + totalServiceFee);
+            float finalDeducted; // Biến này để lưu tổng tiền vào SessionLog
+            String billMessage;
 
-
-            // PHẦN 4: IN HÓA ĐƠN CÓ TÊN THU NGÂN
             Account player = log.getAccount();
 
             if (player != null && player.getRole().equalsIgnoreCase("Member")) {
                 float currentBalance = player.getBalance() != null ? player.getBalance() : 0f;
-                float newBalance = currentBalance - finalTotal;
 
-                if (newBalance >= 0) {
+                if (currentBalance >= exactTotal) {
+                    // TRƯỜNG HỢP 1: HỘI VIÊN ĐỦ TIỀN
+                    // -> Trừ chính xác từng đồng lẻ, KHÔNG làm tròn lên ngàn
+                    float newBalance = currentBalance - exactTotal;
                     player.setBalance(newBalance);
                     accountDAO.update(player);
 
-                    return String.format("HÓA ĐƠN (HỘI VIÊN)\n" +
+                    finalDeducted = exactTotal;
+
+                    billMessage = String.format("HÓA ĐƠN (HỘI VIÊN)\n" +
                                     "Thu ngân: %s\n" +
                                     "Tài khoản: %s\n" +
-                                    "Thời gian chơi: %.2f giờ\n" +
+                                    "Thời gian chơi: %d phút\n" +
                                     "Tiền máy: %,.0f VNĐ\n" +
                                     "Tiền dịch vụ: %,.0f VNĐ\n" +
                                     "------------------\n" +
                                     "TỔNG CỘNG: %,.0f VNĐ\n" +
-                                    "(Đã trừ thẳng vào số dư tài khoản)\n" +
+                                    "(Đã trừ chính xác vào số dư tài khoản)\n" +
                                     "Số dư còn lại: %,.0f VNĐ",
-                            cashierName, player.getUsername(), hoursPlayed, totalFee, totalServiceFee, finalTotal, newBalance);
+                            cashierName, player.getUsername(), displayMinutes, totalFee, totalServiceFee, exactTotal, newBalance);
                 } else {
-                    // Hội viên thiếu tiền -> Lưu vết số tiền mặt thu thêm
-                    float cashNeeded = Math.abs(newBalance);
+                    // TRƯỜNG HỢP 2: HỘI VIÊN THIẾU TIỀN
+                    // -> Chỉ làm tròn lên ngàn đối với phần tiền mặt phải thu thêm
+                    float exactMissing = exactTotal - currentBalance;
 
+                    // Làm tròn phần tiền mặt thu thêm lên mức 1.000đ chẵn
+                    float cashNeeded = (float) (Math.ceil(exactMissing / 1000.0) * 1000);
+
+                    // Tính phần tiền dư ra do việc làm tròn để nạp ngược lại cho khách
+                    float surplus = cashNeeded - exactMissing;
+
+                    // Cập nhật ví (Khách có lại phần tiền thừa)
+                    player.setBalance(surplus);
+                    accountDAO.update(player);
+
+                    finalDeducted = currentBalance + cashNeeded;
+
+                    // Lưu vết số tiền mặt thu thêm vào DB
                     com.NetProject.entity.DepositTransaction cashReceipt = new com.NetProject.entity.DepositTransaction();
                     cashReceipt.setTransactionId("CASH_" + System.currentTimeMillis());
                     cashReceipt.setAmount(cashNeeded);
                     cashReceipt.setDepositTime(java.time.LocalDateTime.now());
                     cashReceipt.setAccount(player);
-
-                    // Ghi xuống DB
                     new com.NetProject.dao.DepositTransactionDAO().create(cashReceipt);
 
-                    // Ép ví về 0đ
-                    player.setBalance(0f);
-                    accountDAO.update(player);
-
-                    return String.format("HÓA ĐƠN\n" +
+                    billMessage = String.format("HÓA ĐƠN (HỘI VIÊN - TRẢ THÊM TIỀN MẶT)\n" +
                                     "Thu ngân: %s\n" +
                                     "Tài khoản: %s\n" +
-                                    "Thời gian chơi: %.2f giờ\n" +
-                                    "Tiền máy: %,.0f VNĐ\n" +
-                                    "Tiền dịch vụ: %,.0f VNĐ\n" +
+                                    "Thời gian chơi: %d phút\n" +
                                     "------------------\n" +
-                                    "TỔNG CỘNG: %,.0f VNĐ\n" +
-                                    "Số dư trong ví chỉ có: %,.0f VNĐ\n" +
-                                    "Thu thêm tiền mặt: %,.0f VNĐ",
-                            cashierName, player.getUsername(), hoursPlayed, totalFee, totalServiceFee, finalTotal, currentBalance, cashNeeded);
+                                    "Tổng chi phí: %,.0f VNĐ\n" +
+                                    "Tiền trong tài khoản: %,.0f VNĐ\n" +
+                                    "CẦN THU TIỀN MẶT: %,.0f VNĐ\n",
+                            cashierName, player.getUsername(), displayMinutes, exactTotal, currentBalance, cashNeeded, surplus);
                 }
             } else {
-                return String.format("HÓA ĐƠN\n" +
+                // TRƯỜNG HỢP 3: KHÁCH VÃNG LAI
+                // -> Phải trả bằng tiền mặt toàn bộ, làm tròn tổng bill lên mức ngàn đồng
+                finalDeducted = (float) (Math.ceil(exactTotal / 1000.0) * 1000);
+
+                billMessage = String.format("HÓA ĐƠN (KHÁCH VÃNG LAI)\n" +
                                 "Thu ngân: %s\n" +
-                                "Thời gian chơi: %.2f giờ\n" +
+                                "Thời gian chơi: %d phút\n" +
                                 "Tiền máy: %,.0f VNĐ\n" +
                                 "Tiền dịch vụ: %,.0f VNĐ\n" +
                                 "------------------\n" +
-                                "TỔNG CỘNG KHÁCH TRẢ TIỀN MẶT: %,.0f VNĐ",
-                        cashierName, hoursPlayed, totalFee, totalServiceFee, finalTotal);
+                                "TỔNG CỘNG KHÁCH TRẢ: %,.0f VNĐ",
+                        cashierName, displayMinutes, totalFee, totalServiceFee, finalDeducted);
             }
+
+            // Ghi Log tổng tiền cuối cùng và Đóng máy
+            log.setDeductedAmount(finalDeducted);
+            sessionLogDAO.update(log);
+
+            pc.setStatus("Available");
+            computerDAO.update(pc);
+
+            return billMessage;
 
         } catch (Exception e) {
             e.printStackTrace();
