@@ -7,7 +7,7 @@ import com.NetProject.view.frmLogin;
 
 import javax.swing.*;
 
-public class    MainApp {
+public class MainApp {
     public static void main(String[] args) {
         // 1. KÍCH HOẠT GIAO DIỆN FLATLAF
         try {
