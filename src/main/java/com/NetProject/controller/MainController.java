@@ -67,7 +67,7 @@ public class MainController {
         // SỰ KIỆN: MỞ FORM QUẢN LÝ NHÂN VIÊN (CHỈ DÀNH CHO ADMIN)
         this.mainView.getBtnManageEmployee().addActionListener(e -> {
 
-            // 🛡️ LỚP KHIÊN BẢO VỆ: KIỂM TRA QUYỀN TRUY CẬP
+            // LỚP KHIÊN BẢO VỆ: KIỂM TRA QUYỀN TRUY CẬP
             if (!loggedInUser.getRole().equalsIgnoreCase("Admin")) {
                 JOptionPane.showMessageDialog(null,
                         "TRUY CẬP BỊ TỪ CHỐI!\nChỉ có Admin mới có quyền truy cập khu vực này.",
