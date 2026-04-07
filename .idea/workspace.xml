@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05e7b50d-05ba-4ab8-aa1c-5d88f68b3790" name="Changes" comment="Modify Folder, File's name">
+    <list default="true" id="05e7b50d-05ba-4ab8-aa1c-5d88f68b3790" name="Changes" comment="Fix lỗi xóa món">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/MainApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +33,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/SayagiMT/NetManagement.git&quot;,
-    &quot;accountId&quot;: &quot;ba3c1208-ab50-4540-992c-f9f5a70b2806&quot;
+    &quot;accountId&quot;: &quot;da0c190a-e065-4185-8c22-12f15bd02636&quot;
   }
 }</component>
   <component name="ProblemsViewState">
@@ -201,23 +200,7 @@
       <option name="project" value="LOCAL" />
       <updated>1775311857423</updated>
     </task>
-    <task id="LOCAL-00014" summary="Modify Folder, File's name">
-      <option name="closed" value="true" />
-      <created>1775391666326</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1775391666326</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Modify Folder, File's name">
-      <option name="closed" value="true" />
-      <created>1775456912472</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1775456912472</updated>
-    </task>
-    <option name="localTasksCounter" value="16" />
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -234,8 +217,7 @@
     <MESSAGE value="Thêm đăng xuất" />
     <MESSAGE value="Nhân nguyên như cc" />
     <MESSAGE value="Thêm dữ liệu db" />
-    <MESSAGE value="Modify Folder, File's name" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modify Folder, File's name" />
+    <option name="LAST_COMMIT_MESSAGE" value="Thêm dữ liệu db" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
