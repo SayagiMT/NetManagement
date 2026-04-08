@@ -24,7 +24,7 @@ public class MenuServiceImp implements MenuService {
     }
 
     @Override
-    public boolean addMenu(String name, float price, int stock) {
+    public boolean addMenu(String name, float price, int stock, String imagePath) {
         try {
             ServiceItem item = new ServiceItem();
 
@@ -35,8 +35,10 @@ public class MenuServiceImp implements MenuService {
             item.setServiceName(name);
             item.setPrice(price);
             item.setStockQuantity(stock);
-
             item.setServiceType("Đang bán");
+
+            // 👉 LƯU TÊN ẢNH VÀO ENTITY
+            item.setImagePath(imagePath);
 
             dao.create(item);
             return true;
@@ -47,13 +49,18 @@ public class MenuServiceImp implements MenuService {
     }
 
     @Override
-    public boolean updateMenu(String id, String name, float price, int stock) {
+    public boolean updateMenu(String id, String name, float price, int stock, String imagePath) {
         try {
             ServiceItem item = dao.findById(id);
             if (item != null) {
                 item.setServiceName(name);
                 item.setPrice(price);
                 item.setStockQuantity(stock);
+
+                if (imagePath != null && !imagePath.isEmpty()) {
+                    item.setImagePath(imagePath);
+                }
+
                 dao.update(item);
                 return true;
             }
@@ -68,11 +75,9 @@ public class MenuServiceImp implements MenuService {
         try {
             ServiceItem item = dao.findById(id);
             if (item != null) {
-                // KHÔNG DÙNG: dao.delete(item);
-
                 // ÁP DỤNG SOFT DELETE (XÓA MỀM)
-                item.setServiceType("Ngừng bán"); // Bạn có thể tận dụng trường type hoặc thêm trường status mới
-                // item.setStockQuantity(0); // Có thể ép tồn kho về 0 để chắc chắn không ai bán được nữa
+                item.setServiceType("Ngừng bán");
+                item.setStockQuantity(0);
 
                 dao.update(item);
                 return true;

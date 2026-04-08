@@ -7,9 +7,9 @@ import java.util.List;
 public interface MenuService {
     List<ServiceItem> getAllItems();
 
-    boolean addMenu(String name, float price, int stock);
+    boolean addMenu(String name, float price, int stock, String imagePath);
 
-    boolean updateMenu(String id, String name, float price, int stock);
+    boolean updateMenu(String id, String name, float price, int stock, String imagePath);
 
     boolean deleteMenu(String id);
 }

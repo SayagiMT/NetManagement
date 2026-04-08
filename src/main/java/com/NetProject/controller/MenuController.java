@@ -6,12 +6,19 @@ import com.NetProject.service.MenuServiceImp;
 import com.NetProject.view.frmMenu;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 public class MenuController {
     private final frmMenu view;
     private final MenuService service;
     private List<ServiceItem> list;
+    private String currentImagePath = "";
 
     public MenuController(frmMenu view) {
         this.view = view;
@@ -34,7 +41,7 @@ public class MenuController {
     }
 
     private void initEvents() {
-        // 1. Đổ dữ liệu từ bảng lên form khi click
+        // 1. ĐỔ DỮ LIỆU TỪ BẢNG LÊN FORM KHI CLICK VÀ LOAD ẢNH
         view.getTblMenu().getSelectionModel().addListSelectionListener(e -> {
             int row = view.getTblMenu().getSelectedRow();
             if (row >= 0 && !e.getValueIsAdjusting()) {
@@ -43,12 +50,54 @@ public class MenuController {
                 view.getTxtName().setText(item.getServiceName());
                 view.getTxtPrice().setText(String.valueOf(item.getPrice()));
                 view.getTxtStock().setText(String.valueOf(item.getStockQuantity()));
+
+                // --- XỬ LÝ LOAD ẢNH LÊN PREVIEW CHỐNG ĐƠ MÁY (SỬ DỤNG SWINGWORKER) ---
+                currentImagePath = (item.getImagePath() != null) ? item.getImagePath() : "";
+                String targetDirPath = System.getProperty("user.dir") + "/src/main/resources/images/";
+                String imageName = currentImagePath.isEmpty() ? "no-image.png" : currentImagePath;
+                File imgFile = new File(targetDirPath + imageName);
+
+                if (imgFile.exists()) {
+                    // Hiện thông báo đang tải để giao diện có phản hồi
+                    view.getLblImagePreview().setIcon(null);
+                    view.getLblImagePreview().setText("Đang load ảnh...");
+
+                    // SỬ DỤNG SWING WORKER ĐỂ LOAD ẢNH NGẦM
+                    SwingWorker<ImageIcon, Void> worker = new SwingWorker<ImageIcon, Void>() {
+                        @Override
+                        protected ImageIcon doInBackground() {
+                            ImageIcon icon = new ImageIcon(imgFile.getAbsolutePath());
+                            // Bắt lỗi an toàn kích thước ảnh, nếu getWidth() = 0 dùng mặc định 140
+                            int width = view.getLblImagePreview().getWidth() > 0 ? view.getLblImagePreview().getWidth() : 140;
+                            int height = view.getLblImagePreview().getHeight() > 0 ? view.getLblImagePreview().getHeight() : 140;
+
+                            // SỬ DỤNG SCALE_FAST để load ảnh mượt mà, không bị đơ giao diện
+                            Image img = icon.getImage().getScaledInstance(width, height, Image.SCALE_FAST);
+                            return new ImageIcon(img);
+                        }
+
+                        @Override
+                        protected void done() {
+                            try {
+                                view.getLblImagePreview().setIcon(get()); // Lấy kết quả ảnh từ doInBackground
+                                view.getLblImagePreview().setText("");
+                            } catch (Exception ex) {
+                                view.getLblImagePreview().setText("Ảnh bị lỗi");
+                            }
+                        }
+                    };
+                    worker.execute(); // Bắt đầu chạy ngầm
+                } else {
+                    view.getLblImagePreview().setIcon(null);
+                    view.getLblImagePreview().setText("Chưa có ảnh");
+                }
             }
         });
 
+        // 2. NÚT THÊM
         view.getBtnAdd().addActionListener(e -> {
             try {
-                // Chỉ cần kiểm tra Tên món
+                // ... (kiểm tra tên món)
                 String name = view.getTxtName().getText().trim();
                 if (name.isEmpty()) {
                     JOptionPane.showMessageDialog(view, "Vui lòng nhập Tên món!");
@@ -58,11 +107,11 @@ public class MenuController {
                 float price = Float.parseFloat(view.getTxtPrice().getText().trim());
                 int stock = Integer.parseInt(view.getTxtStock().getText().trim());
 
-                // Gọi hàm lưu vào DB (Chỉ truyền 3 tham số, hệ thống sẽ tự lo phần Mã)
-                if (service.addMenu(name, price, stock)) {
+                // ĐÃ SỬA: Truyền thêm currentImagePath vào hàm addMenu
+                if (service.addMenu(name, price, stock, currentImagePath)) {
                     JOptionPane.showMessageDialog(view, "Thêm thành công!");
-                    loadData(); // Load lại bảng
-                    view.getBtnClear().doClick(); // Xóa sạch các ô nhập liệu
+                    loadData();
+                    view.getBtnClear().doClick();
                 } else {
                     JOptionPane.showMessageDialog(view, "Thêm thất bại do lỗi hệ thống!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
@@ -70,7 +119,66 @@ public class MenuController {
                 JOptionPane.showMessageDialog(view, "Lỗi: Giá tiền và Tồn kho phải là số!", "Sai định dạng", JOptionPane.WARNING_MESSAGE);
             }
         });
-        // 3. Xử lý nút Cập nhật
+
+        // 3. XỬ LÝ NÚT TẢI ẢNH LÊN (Đã tối ưu Đa Luồng SwingWorker)
+        view.getBtnUploadImage().addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Chọn ảnh minh họa cho món ăn");
+            fileChooser.setFileFilter(new FileNameExtensionFilter("Hình ảnh (JPG, PNG)", "jpg", "jpeg", "png"));
+
+            int userSelection = fileChooser.showOpenDialog(view);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File sourceFile = fileChooser.getSelectedFile();
+
+                // Khóa nút báo hiệu đang xử lý
+                view.getBtnUploadImage().setEnabled(false);
+                view.getLblImagePreview().setIcon(null);
+                view.getLblImagePreview().setText("Đang xử lý ảnh...");
+
+                // SỬ DỤNG SWING WORKER ĐỂ TẢI ẢNH NGẦM (Copy & Scale)
+                SwingWorker<ImageIcon, Void> worker = new SwingWorker<ImageIcon, Void>() {
+                    @Override
+                    protected ImageIcon doInBackground() throws Exception {
+                        String ext = sourceFile.getName().substring(sourceFile.getName().lastIndexOf("."));
+                        String newFileName = "IMG_" + System.currentTimeMillis() + ext;
+                        String targetDirPath = System.getProperty("user.dir") + "/src/main/resources/images/";
+                        File dir = new File(targetDirPath);
+                        if (!dir.exists()) dir.mkdirs();
+
+                        File targetFile = new File(targetDirPath + newFileName);
+
+                        // Copy file tốn thời gian -> Chạy ngầm
+                        Files.copy(sourceFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                        currentImagePath = newFileName;
+
+                        // Load & Scale ảnh tốn thời gian -> Chạy ngầm
+                        ImageIcon icon = new ImageIcon(targetFile.getAbsolutePath());
+                        int width = view.getLblImagePreview().getWidth() > 0 ? view.getLblImagePreview().getWidth() : 140;
+                        int height = view.getLblImagePreview().getHeight() > 0 ? view.getLblImagePreview().getHeight() : 140;
+                        // Chạy ngầm nên dùng SCALE_SMOOTH cho ảnh đẹp mà không sợ treo
+                        Image img = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                        return new ImageIcon(img);
+                    }
+
+                    // Khi chạy ngầm xong thì trả kết quả lên giao diện
+                    @Override
+                    protected void done() {
+                        try {
+                            view.getLblImagePreview().setIcon(get());
+                            view.getLblImagePreview().setText("");
+                        } catch (Exception ex) {
+                            view.getLblImagePreview().setText("Lỗi xử lý");
+                            JOptionPane.showMessageDialog(view, "Có lỗi xảy ra: " + ex.getMessage(), "Lỗi Hệ Thống", JOptionPane.ERROR_MESSAGE);
+                        } finally {
+                            view.getBtnUploadImage().setEnabled(true); // Mở khóa nút bấm
+                        }
+                    }
+                };
+                worker.execute();
+            }
+        });
+
+        // 4. NÚT CẬP NHẬT
         view.getBtnUpdate().addActionListener(e -> {
             try {
                 String id = view.getTxtId().getText();
@@ -82,7 +190,8 @@ public class MenuController {
                 float price = Float.parseFloat(view.getTxtPrice().getText());
                 int stock = Integer.parseInt(view.getTxtStock().getText());
 
-                if (service.updateMenu(id, name, price, stock)) {
+                // ĐÃ SỬA: Truyền thêm currentImagePath vào hàm updateMenu
+                if (service.updateMenu(id, name, price, stock, currentImagePath)) {
                     JOptionPane.showMessageDialog(view, "Cập nhật thành công!");
                     loadData();
                     view.getBtnClear().doClick();
@@ -92,8 +201,9 @@ public class MenuController {
             }
         });
 
-        // 4. Xử lý nút Xóa món
+        // 5. NÚT XÓA MÓN
         view.getBtnDelete().addActionListener(e -> {
+            // ... (code xóa món cũ)
             String id = view.getTxtId().getText();
             if (id.isEmpty()) {
                 JOptionPane.showMessageDialog(view, "Vui lòng chọn món cần xóa!");
@@ -111,13 +221,18 @@ public class MenuController {
             }
         });
 
-        // 5. Nút Làm mới (Clear form)
+        // 6. NÚT LÀM MỚI (CLEAR FORM)
         view.getBtnClear().addActionListener(e -> {
             view.getTxtId().setText("");
             view.getTxtName().setText("");
             view.getTxtPrice().setText("");
             view.getTxtStock().setText("");
             view.getTblMenu().clearSelection();
+
+            // ĐÃ SỬA: Dọn dẹp ảnh trên UI về mặc định
+            currentImagePath = "";
+            view.getLblImagePreview().setIcon(null);
+            view.getLblImagePreview().setText("Chưa có ảnh");
         });
     }
 }

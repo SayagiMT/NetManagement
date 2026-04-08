@@ -154,10 +154,10 @@ public class DatabaseInitializer {
         // ==========================================
         // 5. TẠO THỰC ĐƠN ĐỒ ĂN/THỨC UỐNG
         // ==========================================
-        svcDAO.create(new ServiceItem("SVC_01", "Nước Tăng Lực Sting", "Thức uống", 15000f, 100));
-        svcDAO.create(new ServiceItem("SVC_02", "Nước Lọc Aquafina", "Thức uống", 10000f, 50));
-        svcDAO.create(new ServiceItem("SVC_03", "Mì Tôm Trứng Xúc Xích", "Đồ ăn", 25000f, 30));
-        svcDAO.create(new ServiceItem("SVC_04", "Cơm Chiên Dương Châu", "Đồ ăn", 35000f, 20));
-        svcDAO.create(new ServiceItem("SVC_05", "Thẻ Garena 50k", "Thẻ game", 50000f, 200));
+        svcDAO.create(new ServiceItem("SVC_01", "Nước Tăng Lực Sting", "Thức uống", 15000f, 100, ""));
+        svcDAO.create(new ServiceItem("SVC_02", "Nước Lọc Aquafina", "Thức uống", 10000f, 50, ""));
+        svcDAO.create(new ServiceItem("SVC_03", "Mì Tôm Trứng Xúc Xích", "Đồ ăn", 25000f, 30, ""));
+        svcDAO.create(new ServiceItem("SVC_04", "Cơm Chiên Dương Châu", "Đồ ăn", 35000f, 20, ""));
+        svcDAO.create(new ServiceItem("SVC_05", "Thẻ Garena 50k", "Thẻ game", 50000f, 200, ""));
     }
 }

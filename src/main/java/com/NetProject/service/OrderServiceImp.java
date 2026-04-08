@@ -45,7 +45,8 @@ public class OrderServiceImp implements OrderService {
                             entity.getServiceId(),
                             entity.getServiceName(),
                             entity.getPrice(),
-                            entity.getStockQuantity()
+                            entity.getStockQuantity(),
+                            entity.getImagePath()
                     );
                     dtoList.add(dto);
                 }

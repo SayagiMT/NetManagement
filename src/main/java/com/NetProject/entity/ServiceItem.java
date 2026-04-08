@@ -1,5 +1,6 @@
     package com.NetProject.entity;
 
+    import jakarta.persistence.Column;
     import jakarta.persistence.Entity;
     import jakarta.persistence.Id;
 
@@ -11,16 +12,19 @@
         private String serviceType;
         private Float price;
         private Integer stockQuantity;
+        @Column(name = "imagePath")
+        private String imagePath;
 
         public ServiceItem() {
         }
 
-        public ServiceItem(String serviceId, String serviceName, String serviceType, Float price, Integer stockQuantity) {
+        public ServiceItem(String serviceId, String serviceName, String serviceType, Float price, Integer stockQuantity, String imagePath) {
             this.serviceId = serviceId;
             this.serviceName = serviceName;
             this.serviceType = serviceType;
             this.price = price;
             this.stockQuantity = stockQuantity;
+            this.imagePath = imagePath;
         }
 
         // Mã dịch vụ: String (Thuộc tính khóa - Primary Key)
@@ -67,5 +71,13 @@
 
         public void setStockQuantity(Integer stockQuantity) {
             this.stockQuantity = stockQuantity;
+        }
+
+        public String getImagePath() {
+            return imagePath;
+        }
+
+        public void setImagePath(String imagePath) {
+            this.imagePath = imagePath;
         }
     }

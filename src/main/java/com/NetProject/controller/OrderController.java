@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.File;
+import java.awt.Image;
 
 public class OrderController {
     private frmOrder view;
@@ -34,11 +36,10 @@ public class OrderController {
     }
 
     private void loadMenu() {
-        // Chỉ cần gọi hàm này, Service sẽ tự biết trả về danh sách các món CÒN BÁN
         menuList = service.getAllMenuItems();
 
         DefaultTableModel model = view.getMenuModel();
-        model.setRowCount(0); // Xóa dữ liệu cũ
+        model.setRowCount(0);
 
         for (MenuItemDTO item : menuList) {
             model.addRow(new Object[]{
@@ -51,6 +52,54 @@ public class OrderController {
     }
 
     private void initEvents() {
+        view.getTblMenu().getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int row = view.getTblMenu().getSelectedRow();
+                if (row >= 0) {
+                    MenuItemDTO selectedItem = menuList.get(row);
+
+                    // 1. Lấy tên file ảnh
+                    String imageName = selectedItem.getImagePath();
+                    if (imageName == null || imageName.trim().isEmpty()) {
+                        imageName = "no-image.png";
+                    }
+
+                    // 2. Chắp nối thành đường dẫn thư mục chuẩn xác
+                    String dirPath = System.getProperty("user.dir") + "/src/main/resources/images/";
+                    File imgFile = new File(dirPath + imageName);
+
+                    // 3. Load ảnh lên giao diện bằng luồng ngầm
+                    if (imgFile.exists()) {
+                        view.getLblImage().setIcon(null);
+                        view.getLblImage().setText("Đang load...");
+
+                        SwingWorker<ImageIcon, Void> worker = new SwingWorker<ImageIcon, Void>() {
+                            @Override
+                            protected ImageIcon doInBackground() {
+                                ImageIcon icon = new ImageIcon(imgFile.getAbsolutePath());
+                                // Ép cứng kích thước 150x150 để tránh lỗi Width = 0
+                                Image img = icon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+                                return new ImageIcon(img);
+                            }
+
+                            @Override
+                            protected void done() {
+                                try {
+                                    view.getLblImage().setIcon(get());
+                                    view.getLblImage().setText("");
+                                } catch (Exception ex) {
+                                    view.getLblImage().setText("Lỗi hiển thị");
+                                }
+                            }
+                        };
+                        worker.execute();
+                    } else {
+                        view.getLblImage().setIcon(null);
+                        view.getLblImage().setText("Chưa có ảnh");
+                    }
+                }
+            }
+        });
 
         // Sự kiện: Nút THÊM VÀO GIỎ HÀNG
         view.getBtnAddToCart().addActionListener(new ActionListener() {
@@ -135,6 +184,7 @@ public class OrderController {
             }
         });
     }
+
     // Hàm xử lí Logic Thêm vào giỏ
     private void addToCart(MenuItemDTO item, int quantity) {
         boolean exists = false;
@@ -152,6 +202,7 @@ public class OrderController {
 
         updateCartView();
     }
+
     // Hàm vẽ lại giỏ hàng: Hệ thống sẽ xóa giỏ hàng cũ và cập nhật lại giỏ hàng mới
     private void updateCartView() {
         DefaultTableModel model = view.getCartModel();

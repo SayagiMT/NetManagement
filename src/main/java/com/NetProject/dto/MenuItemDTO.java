@@ -5,14 +5,16 @@ public class MenuItemDTO {
     private String serviceName;
     private Float price;
     private Integer stockQuantity;
+    private String imagePath;
 
     public MenuItemDTO() {}
 
-    public MenuItemDTO(String serviceId, String serviceName, Float price, Integer stockQuantity) {
+    public MenuItemDTO(String serviceId, String serviceName, Float price, Integer stockQuantity, String imagePath) {
         this.serviceId = serviceId;
         this.serviceName = serviceName;
         this.price = price;
         this.stockQuantity = stockQuantity;
+        this.imagePath = imagePath;
     }
 
     public String getServiceId() { return serviceId; }
@@ -26,4 +28,12 @@ public class MenuItemDTO {
 
     public Integer getStockQuantity() { return stockQuantity; }
     public void setStockQuantity(Integer stockQuantity) { this.stockQuantity = stockQuantity; }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 }
