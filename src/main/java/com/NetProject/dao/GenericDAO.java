@@ -31,7 +31,7 @@ public class GenericDAO<T, ID> {
     }
 
     // =========================
-    // 🔥 Query Template (Dùng cho Truy vấn/Lấy dữ liệu)
+    // Query Template (Dùng cho Truy vấn/Lấy dữ liệu)
     // =========================
     protected <R> R executeQuery(Function<Session, R> action) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
