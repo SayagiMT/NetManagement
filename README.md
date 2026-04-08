@@ -119,3 +119,27 @@ NetManagement/
 ├── pom.xml                           # Quản lý thư viện Maven (Hibernate, MySQL, FlatLaf)
 └── README.md                         
 ```
+> [!NOTE]
+> **LƯU Ý: Tài khoản Đăng nhập Mặc định:**
+> 
+> Khi tạo xong cơ sở dữ liệu, hệ thống đã tự động cấp phát một tài khoản Quản trị viên mẫu để trải nghiệm nhanh:
+> 
+> **1. Tài khoản Quản lý (Admin/ Employee):**
+> - **Username:** `admin` 
+> - **Password:** `admin@2026`
+> 
+> **2. Tài khoản hội viên (Member):**
+> - **Username:** `thanh_vip` 
+> - **Password:** `tungpro99` 
+> *Để xem danh sách toàn bộ tài khoản Nhân viên và Hội viên khác, vui lòng kiểm tra dữ liệu trực tiếp tại bảng `Account` trong Database.*
+
+> [!WARNING]
+> **QUAN TRỌNG: Cấu hình tài khoản MySQL trước khi chạy!**
+> 
+> Do cấu hình MySQL trên mỗi máy tính là khác nhau, trước khi chạy chương trình, mở file `src/main/resources/hibernate.cfg.xml` và sửa lại 2 dòng sau cho khớp với username và password trên máy: 
+> 
+> ```xml
+> > <property name="hibernate.connection.username">root</property>
+> 
+> > <property name="hibernate.connection.password">123456</property>
+> ```
