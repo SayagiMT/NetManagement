@@ -120,7 +120,7 @@ NetManagement/
 └── README.md                         
 ```
 > [!NOTE]
-> **LƯU Ý: Tài khoản Đăng nhập Mặc định:**
+> **Tài khoản Đăng nhập Mặc định:**
 > 
 > Khi tạo xong cơ sở dữ liệu, hệ thống đã tự động cấp phát một tài khoản Quản trị viên mẫu để trải nghiệm nhanh:
 > 
