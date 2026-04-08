@@ -19,14 +19,14 @@ public class OrderServiceImp implements OrderService {
     private final InvoiceDAO invoiceDAO;
     private final InvoiceDetailDAO invoiceDetailDAO;
     private final AccountDAO accountDAO;
-    private final ComputerDAO computerDAO; // 1. Khai báo thêm ComputerDAO
+    private final ComputerDAO computerDAO;
 
     public OrderServiceImp() {
         this.serviceItemDAO = new ServiceItemDAO();
         this.invoiceDAO = new InvoiceDAO();
         this.invoiceDetailDAO = new InvoiceDetailDAO();
         this.accountDAO = new AccountDAO();
-        this.computerDAO = new ComputerDAO(); // 2. Khởi tạo ComputerDAO
+        this.computerDAO = new ComputerDAO();
     }
 
     /**

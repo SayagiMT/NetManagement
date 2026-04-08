@@ -54,40 +54,47 @@ public class MenuController {
                 // --- XỬ LÝ LOAD ẢNH LÊN PREVIEW CHỐNG ĐƠ MÁY (SỬ DỤNG SWINGWORKER) ---
                 currentImagePath = (item.getImagePath() != null) ? item.getImagePath() : "";
                 String targetDirPath = System.getProperty("user.dir") + "/src/main/resources/images/";
-                String imageName = currentImagePath.isEmpty() ? "no-image.png" : currentImagePath;
-                File imgFile = new File(targetDirPath + imageName);
 
-                if (imgFile.exists()) {
-                    // Hiện thông báo đang tải để giao diện có phản hồi
-                    view.getLblImagePreview().setIcon(null);
-                    view.getLblImagePreview().setText("Đang load ảnh...");
+                // 1. Nếu CÓ tên ảnh trong Database
+                if (!currentImagePath.isEmpty()) {
+                    File imgFile = new File(targetDirPath + currentImagePath);
 
-                    // SỬ DỤNG SWING WORKER ĐỂ LOAD ẢNH NGẦM
-                    SwingWorker<ImageIcon, Void> worker = new SwingWorker<ImageIcon, Void>() {
-                        @Override
-                        protected ImageIcon doInBackground() {
-                            ImageIcon icon = new ImageIcon(imgFile.getAbsolutePath());
-                            // Bắt lỗi an toàn kích thước ảnh, nếu getWidth() = 0 dùng mặc định 140
-                            int width = view.getLblImagePreview().getWidth() > 0 ? view.getLblImagePreview().getWidth() : 140;
-                            int height = view.getLblImagePreview().getHeight() > 0 ? view.getLblImagePreview().getHeight() : 140;
+                    if (imgFile.exists()) {
+                        // Hiện thông báo đang tải để giao diện có phản hồi
+                        view.getLblImagePreview().setIcon(null);
+                        view.getLblImagePreview().setText("Đang load ảnh...");
 
-                            // SỬ DỤNG SCALE_FAST để load ảnh mượt mà, không bị đơ giao diện
-                            Image img = icon.getImage().getScaledInstance(width, height, Image.SCALE_FAST);
-                            return new ImageIcon(img);
-                        }
+                        // SỬ DỤNG SWING WORKER ĐỂ LOAD ẢNH NGẦM
+                        SwingWorker<ImageIcon, Void> worker = new SwingWorker<ImageIcon, Void>() {
+                            @Override
+                            protected ImageIcon doInBackground() {
+                                ImageIcon icon = new ImageIcon(imgFile.getAbsolutePath());
+                                int width = view.getLblImagePreview().getWidth() > 0 ? view.getLblImagePreview().getWidth() : 140;
+                                int height = view.getLblImagePreview().getHeight() > 0 ? view.getLblImagePreview().getHeight() : 140;
 
-                        @Override
-                        protected void done() {
-                            try {
-                                view.getLblImagePreview().setIcon(get()); // Lấy kết quả ảnh từ doInBackground
-                                view.getLblImagePreview().setText("");
-                            } catch (Exception ex) {
-                                view.getLblImagePreview().setText("Ảnh bị lỗi");
+                                Image img = icon.getImage().getScaledInstance(width, height, Image.SCALE_FAST);
+                                return new ImageIcon(img);
                             }
-                        }
-                    };
-                    worker.execute(); // Bắt đầu chạy ngầm
-                } else {
+
+                            @Override
+                            protected void done() {
+                                try {
+                                    view.getLblImagePreview().setIcon(get());
+                                    view.getLblImagePreview().setText("");
+                                } catch (Exception ex) {
+                                    view.getLblImagePreview().setText("Ảnh bị lỗi");
+                                }
+                            }
+                        };
+                        worker.execute();
+                    } else {
+                        // Có tên trong Database nhưng file vật lý trong ổ cứng bị xóa mất
+                        view.getLblImagePreview().setIcon(null);
+                        view.getLblImagePreview().setText("Ảnh bị lỗi");
+                    }
+                }
+                // 2. Nếu KHÔNG CÓ ảnh (chuỗi rỗng)
+                else {
                     view.getLblImagePreview().setIcon(null);
                     view.getLblImagePreview().setText("Chưa có ảnh");
                 }
