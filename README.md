@@ -130,7 +130,8 @@ NetManagement/
 > 
 > **2. Tài khoản hội viên (Member):**
 > - **Username:** `thanh_vip` 
-> - **Password:** `tungpro99` 
+> - **Password:** `tungpro99`
+> 
 > *Để xem danh sách toàn bộ tài khoản Nhân viên và Hội viên khác, vui lòng kiểm tra dữ liệu trực tiếp tại bảng `Account` trong Database.*
 
 > [!WARNING]
