@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05e7b50d-05ba-4ab8-aa1c-5d88f68b3790" name="Changes" comment="Thêm ảnh menu">
+    <list default="true" id="05e7b50d-05ba-4ab8-aa1c-5d88f68b3790" name="Changes" comment="SQL script">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/NetProject/test/DatabaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/NetProject/test/DatabaseInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/netproject.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/netproject.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +208,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775628411883</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="SQL script">
+      <option name="closed" value="true" />
+      <created>1775635506445</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1775635506446</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -228,7 +234,8 @@
     <MESSAGE value="Nhân nguyên như cc" />
     <MESSAGE value="Thêm dữ liệu db" />
     <MESSAGE value="Thêm ảnh menu" />
-    <option name="LAST_COMMIT_MESSAGE" value="Thêm ảnh menu" />
+    <MESSAGE value="SQL script" />
+    <option name="LAST_COMMIT_MESSAGE" value="SQL script" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
