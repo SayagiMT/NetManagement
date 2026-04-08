@@ -23,7 +23,7 @@ Hệ thống được tổ chức phân tầng chặt chẽ (Entity / DTO / DAO 
 Mở công cụ quản lý MySQL (Workbench, Navicat, hoặc cmd) và tạo một query mới, sau đó dán file netproject.sql vào và chạy. Hệ thống sẽ tạo ra 1 cơ sở dữ liệu cho dự án.
 
 ### 2. Biên dịch và chạy
-Hệ thống hỗ trợ 2 phương pháp khởi chạy tùy thuộc vào môi trường của bạn:
+Hệ thống hỗ trợ 2 phương pháp khởi chạy tùy thuộc vào môi trường:
 
 **Cách 1: Chạy bằng dòng lệnh Maven (Dành cho Terminal / CMD)**
 Mở terminal tại thư mục gốc của project (nơi chứa file `pom.xml`) và thực thi câu lệnh sau:
