@@ -1,4 +1,4 @@
-# Hệ Thống Quản Lý Quán Net (Cyber Cafe Management)
+# Hệ Thống Quản Lý Quán Net (Net Management)
 
 Ứng dụng desktop quản lý phòng máy toàn diện được phát triển dựa trên kiến trúc **Java Swing MVC + 3-Tier** kết hợp **Hibernate/JPA**. Giao diện phần mềm được thiết kế phẳng (Flat Design) hiện đại bằng thư viện **FlatLaf**.
 
