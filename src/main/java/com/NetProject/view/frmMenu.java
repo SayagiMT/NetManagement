@@ -15,7 +15,7 @@ public class frmMenu extends JFrame {
     private JLabel lblImagePreview;
 
     public frmMenu() {
-        setTitle("Quản Lý Thực Đơn");
+        setTitle("Quản Lý Dịch Vụ");
         setSize(850, 500); // Tăng chiều ngang ra một chút để có chỗ để ảnh
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));

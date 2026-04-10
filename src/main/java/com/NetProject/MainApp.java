@@ -4,7 +4,7 @@ import com.NetProject.controller.LoginController;
 import com.NetProject.service.AccountService;
 import com.NetProject.service.AccountServiceImp;
 import com.NetProject.view.frmLogin;
-import com.NetProject.util.HibernateUtil; // Nhớ import cái này
+import com.NetProject.util.HibernateUtil;
 
 import javax.swing.*;
 
